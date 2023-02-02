@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Bet Bracket</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="eventos">Eventos</string>
+    <string name="jugadores">Jugadores</string>
+    <string name="rankings">Rankings</string>
+    <string name="configuracion">Configuracion</string>
+</resources>
