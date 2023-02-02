@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/events_item"
+        android:id="@+id/eventsFragment"
         android:icon="@drawable/ic_events_24"
         android:title="@string/eventos"/>
 
     <item
-        android:id="@+id/leaderboard_item"
+        android:id="@+id/rankingsFragment"
         android:icon="@drawable/ic_rankings_24"
         android:title="@string/rankings"/>
 
     <item
-        android:id="@+id/players_item"
+        android:id="@+id/playersFragment"
         android:icon="@drawable/ic_person_24"
         android:title="@string/jugadores"/>
 </menu>
