@@ -7,5 +7,8 @@
         android:icon="@drawable/baseline_settings_24"
         app:showAsAction="always"
         android:title="@string/configuracion" />
+    <item
+        android:id="@+id/confiaaag_item"
+        android:title="a" />
 
 </menu>

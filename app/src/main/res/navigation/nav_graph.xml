@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/eventsFragment"
-        android:name="com.example.betbracket.EventsFragment"
+        android:name="com.example.betbracket.events.EventsFragment"
         android:label="Eventos"
         tools:layout="@layout/fragment_events" />
     <fragment
         android:id="@+id/rankingsFragment"
-        android:name="com.example.betbracket.RankingsFragment"
+        android:name="com.example.betbracket.rankings.RankingsFragment"
         android:label="Rankings"
         tools:layout="@layout/fragment_rankings" />
     <fragment
         android:id="@+id/playersFragment"
-        android:name="com.example.betbracket.PlayersFragment"
+        android:name="com.example.betbracket.players.PlayersFragment"
         android:label="Jugadores"
         tools:layout="@layout/fragment_players" />
 </navigation>
