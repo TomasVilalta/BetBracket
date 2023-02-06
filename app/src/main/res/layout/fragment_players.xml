@@ -46,6 +46,7 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
         style="@style/Widget.BetBracket.FloatingActionButton"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
