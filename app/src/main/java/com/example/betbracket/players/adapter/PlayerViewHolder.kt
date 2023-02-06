@@ -10,15 +10,14 @@ class PlayerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ViewPlayerBinding.bind(view)
 
-    fun render(player: Player) {
+    fun render(player: Player, onClickDelete: (Int) -> Unit) {
         binding.playerName.text = player.name
         binding.playerCard.setOnClickListener {
             Toast.makeText(binding.playerCard.context," ${player.name}", Toast.LENGTH_SHORT)
                 .show()
         }
         binding.playerDelete.setOnClickListener {
-            Toast.makeText(binding.playerCard.context,"chaupe", Toast.LENGTH_SHORT)
-                .show()
+            onClickDelete(adapterPosition)
         }
     }
 }

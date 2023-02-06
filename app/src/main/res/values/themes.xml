@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:colorBackground">@color/colorAccent</item>
+        <item name="font">@font/noto_sans</item>
     </style>
 
     <!--    TOOLBAR THEME-->
@@ -28,6 +29,18 @@
     
     <style name="TextAppearance.BetBracket.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="android:textColor"> @color/textColorPrimary</item>
+    </style>
 
+<!--    FAB theme -->
+
+    <style name="Widget.BetBracket.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="tint">@color/colorPrimaryDark</item>
+    </style>
+
+<!--    PLAYERCARD TITLE theme-->
+    <style name="PlayerCard.Text" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/onSecondaryContainer</item>
+        <item name="font">@font/noto_sans</item>
     </style>
 </resources>

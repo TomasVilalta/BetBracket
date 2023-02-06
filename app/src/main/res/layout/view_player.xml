@@ -14,17 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/secondaryContainer"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="4dp"
-        >
+        android:padding="8dp">
 
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/player_image"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:elevation="3dp"
-            android:padding="5dp"
             android:src="@drawable/descarga"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,11 +28,10 @@
 
         <TextView
             android:id="@+id/player_name"
-            style="@style/TextAppearance.MaterialComponents.Body2"
+            style="@style/PlayerCard.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/noto_sans"
+            android:layout_marginStart="8dp"
             android:text="Player Name"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

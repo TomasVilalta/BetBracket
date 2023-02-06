@@ -6,4 +6,5 @@
     <string name="jugadores">Jugadores</string>
     <string name="rankings">Rankings</string>
     <string name="configuracion">Configuracion</string>
+    <string name="jugadoresCount">Jugadores %1$d</string>
 </resources>
