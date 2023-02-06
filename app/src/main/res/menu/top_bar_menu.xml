@@ -8,7 +8,8 @@
         app:showAsAction="always"
         android:title="@string/configuracion" />
     <item
-        android:id="@+id/confiaaag_item"
+        android:id="@+id/restart_item"
+        android:icon="@drawable/ic_restart_24"
         android:title="a" />
 
 </menu>

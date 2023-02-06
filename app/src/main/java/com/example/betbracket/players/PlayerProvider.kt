@@ -10,9 +10,6 @@ class PlayerProvider {
             Player ("Pepe", 74, 21),
             Player ("Juan", 88, 5),
             Player ("Pepe", 45, 7),
-
-
-
             )
     }
 }

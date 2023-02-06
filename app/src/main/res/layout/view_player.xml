@@ -1,46 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:elevation="5dp"
+    app:cardCornerRadius="15dp">
 
-    <ImageView
-        android:id="@+id/player_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/baseline_settings_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/player_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Player Name"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/player_image"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/player_delete"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_delete_24"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/player_edit"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_edit_24"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/player_delete"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/player_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/secondaryContainer"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        >
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/player_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:elevation="3dp"
+            android:padding="5dp"
+            android:src="@drawable/descarga"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circularImage" />
+
+        <TextView
+            android:id="@+id/player_name"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Player Name"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/player_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/player_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_delete_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/onSecondaryContainer" />
+
+        <ImageView
+            android:id="@+id/player_edit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/player_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/onSecondaryContainer" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

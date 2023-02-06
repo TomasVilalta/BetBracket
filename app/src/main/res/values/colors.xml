@@ -7,4 +7,39 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--COLORS-->
+    <color name="seed">#70d2ff</color>
+    <color name="colorPrimary">#70D2FF</color>
+    <color name="colorPrimaryDark">#003547</color>
+    <color name="colorAccent">#191C1E</color>
+    <color name="textColorPrimary">#E1E2E5</color>
+    <color name="toolbarIconColor">@color/textColorPrimary</color>
+    <color name="primaryContainer">#004D66</color>
+    <color name="onPrimaryContainer">#C0E8FF</color>
+    <color name="secondary">#B4CAD6</color>
+    <color name="onSecondary">#1F333D</color>
+    <color name="secondaryContainer">#364954</color>
+    <color name="onSecondaryContainer">#D0E6F3</color>
+    <color name="error">#FFB4AB</color>
+    <color name="errorContainer">#93000A</color>
+    <color name="onError">#690005</color>
+    <color name="onErrorContainer">#FFDAD6</color>
+    <color name="background">#191C1E</color>
+    <color name="onBackground">#E1E2E5</color>
+    <color name="surface">#191C1E</color>
+    <color name="onSurface">#E1E2E5</color>
+    <color name="surfaceVariant">#40484C</color>
+    <color name="onSurfaceVariant">#C0C7CD</color>
+    <color name="outline">#8A9297</color>
+    <color name="inverseOnSurface">#191C1E</color>
+    <color name="inverseSurface">#E1E2E5</color>
+    <color name="inversePrimary">#006686</color>
+    <color name="shadow">#000000</color>
+    <color name="surfaceTint">#70D2FF</color>
+    <color name="outlineVariant">#40484C</color>
+    <color name="scrim">#000000</color>
+
+
+
 </resources>

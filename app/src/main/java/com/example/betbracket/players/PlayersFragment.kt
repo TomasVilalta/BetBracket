@@ -19,10 +19,6 @@ class PlayersFragment : Fragment() {
 
         binding.playerList.layoutManager = LinearLayoutManager(this.context)
         binding.playerList.adapter = PlayerAdapter(PlayerProvider.playerList)
-
-
-
-
         return binding.root
     }
 
