@@ -43,4 +43,12 @@
         <item name="android:textColor">@color/onSecondaryContainer</item>
         <item name="font">@font/noto_sans</item>
     </style>
+    
+<!--    ALERT DIALOG THEME -->
+    <style name="AlertDialog.BetBracket" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:theme">@style/Theme.BetBracket</item>
+        <item name="android:background">@color/secondaryContainer</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/onSecondaryContainer</item>
+    </style>
 </resources>

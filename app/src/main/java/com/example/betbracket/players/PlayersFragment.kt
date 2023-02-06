@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayersBinding
 import com.example.betbracket.players.adapter.PlayerAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PlayersFragment : Fragment() {
     private var _binding: FragmentPlayersBinding? = null
@@ -36,7 +37,7 @@ class PlayersFragment : Fragment() {
     }
 
     private fun createPlayer() {
-        var newPlayer = Player("Paco", 100, 5)
+        var newPlayer = Player("Paco", 100)
         playerMutableList.add(newPlayer)
         adapter.notifyItemInserted(playerMutableList.size - 1)
         lLayoutManager.scrollToPosition(playerMutableList.size-1)
@@ -47,9 +48,17 @@ class PlayersFragment : Fragment() {
     }
 
     private fun onDeleteItem(playerPos: Int) {
-        playerMutableList.removeAt(playerPos)
-        adapter.notifyItemRemoved(playerPos)
-        updatePlayerCount()
+        MaterialAlertDialogBuilder(this.requireContext(),
+        R.style.AlertDialog_BetBracket)
+            .setMessage("¿Quieres eliminar a ${playerMutableList[playerPos].name}?")
+            .setPositiveButton("Si"){ _, _ ->
+                playerMutableList.removeAt(playerPos)
+                adapter.notifyItemRemoved(playerPos)
+                updatePlayerCount()
+            }
+            .setNegativeButton("No"){ _, _ ->
+            }.show()
+
     }
 
     private fun updatePlayerCount() {
