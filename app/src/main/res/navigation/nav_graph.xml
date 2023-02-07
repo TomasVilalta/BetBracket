@@ -19,5 +19,14 @@
         android:id="@+id/playersFragment"
         android:name="com.example.betbracket.players.PlayersFragment"
         android:label="Jugadores"
-        tools:layout="@layout/fragment_players" />
+        tools:layout="@layout/fragment_players" >
+        <action
+            android:id="@+id/action_playersFragment_to_playerFormFragment"
+            app:destination="@id/playerFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFormFragment"
+        android:name="com.example.betbracket.players.PlayerFormFragment"
+        android:label="fragment_player_form"
+        tools:layout="@layout/fragment_player_form" />
 </navigation>

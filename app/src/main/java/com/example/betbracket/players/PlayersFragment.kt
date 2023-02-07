@@ -1,8 +1,15 @@
 package com.example.betbracket.players
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayersBinding
@@ -14,7 +21,7 @@ class PlayersFragment : Fragment() {
     private val binding get() = _binding!!
     private val playerMutableList: MutableList<Player> = PlayerProvider.playerList.toMutableList()
     private lateinit var adapter: PlayerAdapter
-    private val lLayoutManager= LinearLayoutManager(this.context)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,8 +29,14 @@ class PlayersFragment : Fragment() {
     ): View? {
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
         initRecyclerView()
+        binding.addFab.setOnClickListener{ view: View ->
+                    createPlayer()
+        }
+
+
+
         updatePlayerCount()
-        binding.addFab.setOnClickListener { createPlayer() }
+
         return binding.root
     }
 
@@ -32,15 +45,18 @@ class PlayersFragment : Fragment() {
             PlayerAdapter(
                 playerList = playerMutableList,
                 onClickDelete = { playerPos -> onDeleteItem(playerPos) })
-        binding.playerList.layoutManager = lLayoutManager
+        binding.playerList.layoutManager = LinearLayoutManager(this.context)
         binding.playerList.adapter = adapter
     }
 
     private fun createPlayer() {
-        var newPlayer = Player("Paco", 100)
+
+
+
+        val newPlayer = Player("Paco", 100)
         playerMutableList.add(newPlayer)
         adapter.notifyItemInserted(playerMutableList.size - 1)
-        lLayoutManager.scrollToPosition(playerMutableList.size-1)
+        binding.playerList.layoutManager?.scrollToPosition(playerMutableList.size-1)
         updatePlayerCount()
         if (playerMutableList.size > 0) {
             hideEmptyListUI()
@@ -48,15 +64,17 @@ class PlayersFragment : Fragment() {
     }
 
     private fun onDeleteItem(playerPos: Int) {
-        MaterialAlertDialogBuilder(this.requireContext(),
-        R.style.AlertDialog_BetBracket)
+        MaterialAlertDialogBuilder(
+            this.requireContext(),
+            R.style.AlertDialog_BetBracket
+        )
             .setMessage("¿Quieres eliminar a ${playerMutableList[playerPos].name}?")
-            .setPositiveButton("Si"){ _, _ ->
+            .setPositiveButton("Si") { _, _ ->
                 playerMutableList.removeAt(playerPos)
                 adapter.notifyItemRemoved(playerPos)
                 updatePlayerCount()
             }
-            .setNegativeButton("No"){ _, _ ->
+            .setNegativeButton("No") { _, _ ->
             }.show()
 
     }
@@ -84,25 +102,21 @@ class PlayersFragment : Fragment() {
         binding.sadfaceImageView.visibility = View.VISIBLE
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
 
 
     //    I DONT KNOW WHAT TO DO WITH THIS
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        val menuHost: MenuHost = requireActivity()
-//        menuHost.addMenuProvider(object : MenuProvider {
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                menuInflater.inflate(R.menu.bottom_nav_menu, menu)
-//            }
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                return false
-//            }
-//        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.top_bar_menu, menu)
+            }
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
 
 
 }
