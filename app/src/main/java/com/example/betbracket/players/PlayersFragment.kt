@@ -3,6 +3,9 @@ package com.example.betbracket.players
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayersBinding
 import com.example.betbracket.players.adapter.PlayerAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PlayersFragment : Fragment() {
@@ -28,8 +32,11 @@ class PlayersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
+
+        checkBottomNav()
         initRecyclerView()
         binding.addFab.setOnClickListener{ view: View ->
+                    view.findNavController().navigate(R.id.action_playersFragment_to_playerFormFragment)
                     createPlayer()
         }
 
@@ -38,6 +45,16 @@ class PlayersFragment : Fragment() {
         updatePlayerCount()
 
         return binding.root
+    }
+
+    private fun checkBottomNav() {
+//        val bottomNav = (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+//        if(bottomNav.visibility == View.GONE){
+//            val bottomNavAnimation : Animation = AnimationUtils.loadAnimation(requireContext(),
+//                R.anim.slide_up_in)
+//            bottomNav.startAnimation(bottomNavAnimation)
+//            bottomNav.visibility = View.VISIBLE
+//        }
     }
 
     private fun initRecyclerView() {

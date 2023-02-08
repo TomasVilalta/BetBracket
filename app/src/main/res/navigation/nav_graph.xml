@@ -22,11 +22,15 @@
         tools:layout="@layout/fragment_players" >
         <action
             android:id="@+id/action_playersFragment_to_playerFormFragment"
-            app:destination="@id/playerFormFragment" />
+            app:destination="@id/playerFormFragment"
+            app:enterAnim="@anim/pop_in"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/pop_out" />
     </fragment>
     <fragment
         android:id="@+id/playerFormFragment"
         android:name="com.example.betbracket.players.PlayerFormFragment"
-        android:label="fragment_player_form"
+        android:label="Nuevo Jugador"
         tools:layout="@layout/fragment_player_form" />
 </navigation>

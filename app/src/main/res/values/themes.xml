@@ -12,6 +12,7 @@
 
     <!--    TOOLBAR THEME-->
     <style name="Widget.BetBracket.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
         <item name="android:background">?attr/colorAccent</item>
         <item name="android:theme">@style/Theme.BetBracket</item>
         <item name="colorControlNormal">@color/textColorPrimary</item>
@@ -21,7 +22,8 @@
 
     <!-- BOTTOM NAV THEME   -->
     <style name="Widget.BetBracket.Toolbar.BottomNavigationView.Colored" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="android:background">@color/surface</item>
+        <item name="android:background">@color/background</item>
+        <item name="android:backgroundTint">@color/errorContainer</item>
         <item name="itemTextColor">@color/bottom_nav_item_color</item>
         <item name="itemIconTint">@color/bottom_nav_item_color</item>
         <item name="elevation">5dp</item>
