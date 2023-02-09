@@ -1,21 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/player_form_layout"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/player_form_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".players.PlayerFormFragment"
+    android:background="@color/secondaryContainer"
     android:orientation="vertical"
-    android:background="@color/secondaryContainer">
+    tools:context=".players.PlayerFormFragment">
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.MaterialComponents.Body2"
-        android:text="aaaaaaaaaaa"/>
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".players.PlayerFormFragment">
 
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/player_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/descarga"
 
-</LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circularImage" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/avatar_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            android:text="Avatar"
+            android:textColor="@color/colorPrimaryDark"
+            app:backgroundTint="@color/colorPrimary"
+            app:icon="@drawable/ic_person_24"
+            app:iconTint="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toStartOf="@+id/upload_image_button"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_image"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/upload_image_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Subir foto"
+            android:textColor="@color/onSecondaryContainer"
+            app:backgroundTint="@color/secondaryContainer"
+            app:icon="@drawable/ic_camera_24"
+            app:iconTint="@color/onSecondaryContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/avatar_button"
+            app:layout_constraintTop_toBottomOf="@+id/player_image"
+            app:strokeColor="@color/onSecondaryContainer" />
+
+        <TextView
+            android:id="@+id/playerName_title"
+            style="@style/PlayerCard.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Nombre del Jugador"
+            app:layout_constraintBottom_toTopOf="@+id/playerName_input"
+            app:layout_constraintStart_toEndOf="@+id/player_image"
+            app:layout_constraintTop_toTopOf="@+id/player_image"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/playerName_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="Alex Cremento"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/onSecondaryContainer"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@color/outline"
+            app:layout_constraintBottom_toTopOf="@id/playerBalance_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/player_image"
+            app:layout_constraintTop_toBottomOf="@+id/playerName_title" />
+
+        <TextView
+            android:id="@+id/playerBalance_title"
+            style="@style/PlayerCard.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Balance"
+            app:layout_constraintBottom_toTopOf="@+id/playerBalance_input"
+            app:layout_constraintStart_toEndOf="@+id/player_image"
+            app:layout_constraintTop_toBottomOf="@+id/playerName_input" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/playerBalance_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:hint="100"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/onSecondaryContainer"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="@color/outline"
+            app:layout_constraintBottom_toBottomOf="@+id/player_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/player_image"
+            app:layout_constraintTop_toBottomOf="@+id/playerBalance_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,12 +1,14 @@
 package com.example.betbracket.players
 
 import android.app.Dialog
+import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.RelativeLayout
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,8 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainer
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Lifecycle
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
@@ -38,9 +42,9 @@ class PlayerFormFragment : Fragment() {
     ): View {
         // Inflate the layout to use as dialog or embedded fragment
         _binding = FragmentPlayerFormBinding.inflate(inflater, container, false)
-
         animateBottomNav()
         setUpToolbar()
+
 
 
         return binding.root
