@@ -3,15 +3,16 @@ package com.example.betbracket.players.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Adapter
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betbracket.R
 import com.example.betbracket.players.Player
 
 class PlayerAdapter(
-    private val playerList: List<Player>,
+    var playerList: MutableList<Player> = emptyList<Player>().toMutableList(),
     private val onClickDelete: (Int) -> Unit,
 
-) : RecyclerView.Adapter<PlayerViewHolder>() {
+    ) : RecyclerView.Adapter<PlayerViewHolder>() {
     override fun getItemCount(): Int = playerList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {

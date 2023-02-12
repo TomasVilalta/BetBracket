@@ -30,7 +30,13 @@
     </fragment>
     <fragment
         android:id="@+id/playerFormFragment"
-        android:name="com.example.betbracket.players.PlayerFormFragment"
+        android:name="com.example.betbracket.players.playerForm.PlayerFormFragment"
         android:label="Nuevo Jugador"
-        tools:layout="@layout/fragment_player_form" />
+        tools:layout="@layout/fragment_player_form" >
+        <action
+            android:id="@+id/action_playerFormFragment_to_playersFragment"
+            app:destination="@id/playersFragment"
+            app:popUpTo="@id/playersFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

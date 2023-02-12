@@ -1,16 +1,16 @@
 package com.example.betbracket.players
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,9 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PlayersFragment : Fragment() {
+
+    private lateinit var playerViewModel: PlayerViewModel
     private var _binding: FragmentPlayersBinding? = null
     private val binding get() = _binding!!
-    private val playerMutableList: MutableList<Player> = PlayerProvider.playerList.toMutableList()
     private lateinit var adapter: PlayerAdapter
 
 
@@ -33,51 +34,66 @@ class PlayersFragment : Fragment() {
     ): View? {
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
 
-        checkBottomNav()
+        playerViewModel = ViewModelProvider(this)[PlayerViewModel::class.java]
+
+        //        ViewModel Listeners
+
+        playerViewModel.playerCount.observe(viewLifecycleOwner, Observer { newPlayerCount ->
+            binding.playerCountText.text = getString(R.string.jugadoresCount, newPlayerCount)
+            if (newPlayerCount == 0) {
+                showEmptyListUI()
+            } else {
+                hideEmptyListUI()
+            }
+
+        })
+
+        playerViewModel.playerList.observe(viewLifecycleOwner, Observer { newPlayerList ->
+                adapter.playerList = newPlayerList
+                adapter.notifyDataSetChanged()
+
+        })
+//        checkBottomNav()
         initRecyclerView()
-        binding.addFab.setOnClickListener{ view: View ->
-                    view.findNavController().navigate(R.id.action_playersFragment_to_playerFormFragment)
-                    createPlayer()
+
+
+        binding.addFab.setOnClickListener { view: View ->
+//            view.findNavController().navigate(R.id.action_playersFragment_to_playerFormFragment)
+            createPlayer()
+
         }
 
 
 
-        updatePlayerCount()
 
         return binding.root
     }
 
-    private fun checkBottomNav() {
-//        val bottomNav = (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//        if(bottomNav.visibility == View.GONE){
-//            val bottomNavAnimation : Animation = AnimationUtils.loadAnimation(requireContext(),
-//                R.anim.slide_up_in)
+//    private fun checkBottomNav() {
+//        val bottomNav =
+//            (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+//        if (bottomNav.visibility == View.GONE) {
+//            val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
+//                requireContext(),
+//                R.anim.slide_up_in
+//            )
 //            bottomNav.startAnimation(bottomNavAnimation)
 //            bottomNav.visibility = View.VISIBLE
 //        }
-    }
+//    }
 
     private fun initRecyclerView() {
         adapter =
-            PlayerAdapter(
-                playerList = playerMutableList,
-                onClickDelete = { playerPos -> onDeleteItem(playerPos) })
-        binding.playerList.layoutManager = LinearLayoutManager(this.context)
+            PlayerAdapter{ playerPos -> onDeleteItem(playerPos) }
+        binding.playerList.layoutManager = LinearLayoutManager(activity)
         binding.playerList.adapter = adapter
     }
 
     private fun createPlayer() {
 
+        adapter.notifyItemInserted(playerViewModel.onCreatePlayer())
+//        binding.playerList.layoutManager?.scrollToPosition(playerMutableList.size - 1)
 
-
-        val newPlayer = Player("Paco", 100)
-        playerMutableList.add(newPlayer)
-        adapter.notifyItemInserted(playerMutableList.size - 1)
-        binding.playerList.layoutManager?.scrollToPosition(playerMutableList.size-1)
-        updatePlayerCount()
-        if (playerMutableList.size > 0) {
-            hideEmptyListUI()
-        }
     }
 
     private fun onDeleteItem(playerPos: Int) {
@@ -85,22 +101,14 @@ class PlayersFragment : Fragment() {
             this.requireContext(),
             R.style.AlertDialog_BetBracket
         )
-            .setMessage("¿Quieres eliminar a ${playerMutableList[playerPos].name}?")
+            .setMessage("¿Quieres eliminar a ${playerViewModel.getPlayerName(playerPos)}?")
             .setPositiveButton("Si") { _, _ ->
-                playerMutableList.removeAt(playerPos)
+                playerViewModel.onDelete(playerPos)
                 adapter.notifyItemRemoved(playerPos)
-                updatePlayerCount()
+
             }
             .setNegativeButton("No") { _, _ ->
             }.show()
-
-    }
-
-    private fun updatePlayerCount() {
-        binding.playerCountText.text = getString(R.string.jugadoresCount, playerMutableList.size)
-        if (playerMutableList.size == 0) {
-            showEmptyListUI()
-        }
     }
 
     private fun hideEmptyListUI() {
@@ -119,16 +127,13 @@ class PlayersFragment : Fragment() {
         binding.sadfaceImageView.visibility = View.VISIBLE
     }
 
-
-
-    //    I DONT KNOW WHAT TO DO WITH THIS
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.top_bar_menu, menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return false
             }
@@ -137,3 +142,5 @@ class PlayersFragment : Fragment() {
 
 
 }
+
+
