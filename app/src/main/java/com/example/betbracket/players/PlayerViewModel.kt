@@ -11,18 +11,18 @@ import kotlinx.coroutines.launch
 
 class PlayerViewModel : ViewModel() {
 
-    private val  _playerList = MutableLiveData<List<Player>>()
-            val playerList: LiveData<List<Player>> get() = _playerList
+    private val _playerList = MutableLiveData<List<Player>>()
+    val playerList: LiveData<List<Player>> get() = _playerList
 
     private val _playerCount = MutableLiveData<Int>()
-            val playerCount : LiveData<Int> get() = _playerCount
+    val playerCount: LiveData<Int> get() = _playerCount
 
     init {
         Log.i("VIEWMODEL", "CREATED")
         viewModelScope.launch {
-        _playerList.value = getPlayers()
-        updatePlayerCount()
-            }
+            _playerList.value = getPlayers()
+            updatePlayerCount()
+        }
     }
 
     override fun onCleared() {
@@ -32,33 +32,35 @@ class PlayerViewModel : ViewModel() {
 
     fun getPlayers() = PlayerProvider.getPlayers()
 
-    fun onDelete(pos: Int){
+
+    private fun updatePlayerCount() {
+        _playerCount.value = PlayerProvider.getPlayerCount()
+    }
+
+    fun getPlayerName(pos: Int): String {
+        return PlayerProvider.getPlayerName(pos)
+    }
+
+
+
+    fun onCreatePlayer(name: String, balance: Int) {
+        val newPlayer = Player(name, balance)
+        PlayerProvider.insertPlayer(newPlayer)
+        Log.i("VIEWMODEL", "Player Created")
+        _playerList.value = getPlayers()
+        updatePlayerCount()
+    }
+
+    fun onDelete(pos: Int) {
         Log.i("onDelete", "playerPos before deletePlayer: $pos")
         PlayerProvider.deletePlayer(pos)
         _playerList.value = getPlayers()
         updatePlayerCount()
     }
 
-
-
-    private fun updatePlayerCount() {
-        _playerCount.value = PlayerProvider.getPlayerCount()
-    }
-
-    fun getPlayerName (pos: Int): String{
-        return PlayerProvider.getPlayerName(pos)
-    }
-
-    fun onCreatePlayer(name: String, balance:Int) {
-        val newPlayer = Player(name, balance)
-        PlayerProvider.insertPlayer(newPlayer)
-        Log.i("VIEWMODEL", "Player Created")
+    fun onEditPlayer (pos: Int, name: String, balance: Int){
+        PlayerProvider.updatePlayer(pos,name,balance)
         _playerList.value = getPlayers()
-        updatePlayerCount()
-        _playerCount.value?.minus(1)?.let { _playerList.value?.get(it)?.name ?: "" }
-            ?.let { Log.i("VIEWMODEL", it) }
-
     }
-
 
 }

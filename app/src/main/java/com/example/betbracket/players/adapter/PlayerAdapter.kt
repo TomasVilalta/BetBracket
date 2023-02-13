@@ -2,8 +2,6 @@ package com.example.betbracket.players.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Adapter
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betbracket.R
 import com.example.betbracket.players.Player
@@ -11,6 +9,7 @@ import com.example.betbracket.players.Player
 class PlayerAdapter(
     var playerList: List<Player>,
     private val onClickDelete: (Int) -> Unit,
+    private val onClickEdit: (Int) -> Unit,
 
     ) : RecyclerView.Adapter<PlayerViewHolder>() {
     override fun getItemCount(): Int = playerList.size
@@ -23,6 +22,6 @@ class PlayerAdapter(
 
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
         val item = playerList[position]
-        holder.render(item, onClickDelete)
+        holder.render(item, onClickDelete, onClickEdit)
     }
 }

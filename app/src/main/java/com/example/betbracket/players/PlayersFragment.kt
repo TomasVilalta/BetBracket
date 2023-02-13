@@ -68,10 +68,16 @@ class PlayersFragment : Fragment() {
 
     private fun initRecyclerView() {
         adapter =
-            PlayerAdapter(playerViewModel.getPlayers()) { playerPos -> onDeleteItem(playerPos) }
+            PlayerAdapter(playerViewModel.getPlayers(), { playerPos -> onDeleteItem(playerPos) },{playerPos -> onEditItem(playerPos)})
         binding.playerList.layoutManager = LinearLayoutManager(activity)
         binding.playerList.adapter = adapter
 
+    }
+
+    private fun onEditItem(playerPos: Int) {
+        //TODO --> probably navigate to Playerformfragment
+        //          and pass it the player position to
+        //          fill the edit texts
     }
 
     private fun onDeleteItem(playerPos: Int) {

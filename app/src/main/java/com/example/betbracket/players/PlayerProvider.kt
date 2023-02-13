@@ -4,6 +4,11 @@ class PlayerProvider {
     companion object {
         fun getPlayerCount(): Int = playerList.size
 
+        fun updatePlayer (pos: Int, name: String, balance: Int) {
+            playerList[pos].name= name
+            playerList[pos].balance= balance
+        }
+
         fun getPlayerName(pos: Int): String = playerList[pos].name
 
         fun insertPlayer(player: Player){

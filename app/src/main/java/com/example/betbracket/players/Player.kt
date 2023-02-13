@@ -1,9 +1,9 @@
 package com.example.betbracket.players
 
 data class Player(
-    val name: String,
-    val balance: Int,
-    val lastWagerResult: Int = 0
+    var name: String,
+    var balance: Int,
+    var lastWagerResult: Int = 0
     ){
 
 }

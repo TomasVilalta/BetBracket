@@ -41,6 +41,6 @@
             app:popEnterAnim="@anim/pop_out"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/playersFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
