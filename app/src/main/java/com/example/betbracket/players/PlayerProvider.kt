@@ -2,9 +2,26 @@ package com.example.betbracket.players
 
 class PlayerProvider {
     companion object {
-        val playerList = listOf<Player>(
+        fun getPlayerCount(): Int = playerList.size
+
+        fun getPlayerName(pos: Int): String = playerList[pos].name
+
+        fun insertPlayer(player: Player){
+            playerList.add(player)
+        }
+        fun deletePlayer(pos: Int){
+            playerList.removeAt(pos)
+        }
+
+        fun getPlayers(): List<Player> = playerList
+
+        private val playerList = mutableListOf<Player>(
             Player("Juan", 100, 14),
             Player("Pepe", 74, 21)
         )
     }
+
+
+
+
 }

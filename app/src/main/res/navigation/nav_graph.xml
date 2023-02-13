@@ -36,7 +36,11 @@
         <action
             android:id="@+id/action_playerFormFragment_to_playersFragment"
             app:destination="@id/playersFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/pop_out"
+            app:popEnterAnim="@anim/pop_out"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/playersFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>

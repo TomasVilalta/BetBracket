@@ -1,12 +1,14 @@
 package com.example.betbracket.players
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -33,11 +35,12 @@ class PlayersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
-
+        Log.i("VIEWMODEL", "ASSIGNED TO PLAYER FRAG")
         playerViewModel = ViewModelProvider(this)[PlayerViewModel::class.java]
 
-        //        ViewModel Listeners
+        initRecyclerView()
 
+        // Observers
         playerViewModel.playerCount.observe(viewLifecycleOwner, Observer { newPlayerCount ->
             binding.playerCountText.text = getString(R.string.jugadoresCount, newPlayerCount)
             if (newPlayerCount == 0) {
@@ -45,54 +48,29 @@ class PlayersFragment : Fragment() {
             } else {
                 hideEmptyListUI()
             }
-
         })
 
-        playerViewModel.playerList.observe(viewLifecycleOwner, Observer { newPlayerList ->
-                adapter.playerList = newPlayerList
-                adapter.notifyDataSetChanged()
+        playerViewModel.playerList.observe(viewLifecycleOwner, Observer { playerList ->
+            Log.i("VIEWMODEL", "playerList Observed! -> $playerList")
 
+            adapter.playerList = playerList
+            adapter.notifyDataSetChanged()
         })
-//        checkBottomNav()
-        initRecyclerView()
 
-
+        //  Click listeners
         binding.addFab.setOnClickListener { view: View ->
-//            view.findNavController().navigate(R.id.action_playersFragment_to_playerFormFragment)
-            createPlayer()
-
+            view.findNavController().navigate(R.id.action_playersFragment_to_playerFormFragment)
         }
-
-
-
 
         return binding.root
     }
 
-//    private fun checkBottomNav() {
-//        val bottomNav =
-//            (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//        if (bottomNav.visibility == View.GONE) {
-//            val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
-//                requireContext(),
-//                R.anim.slide_up_in
-//            )
-//            bottomNav.startAnimation(bottomNavAnimation)
-//            bottomNav.visibility = View.VISIBLE
-//        }
-//    }
 
     private fun initRecyclerView() {
         adapter =
-            PlayerAdapter{ playerPos -> onDeleteItem(playerPos) }
+            PlayerAdapter(playerViewModel.getPlayers()) { playerPos -> onDeleteItem(playerPos) }
         binding.playerList.layoutManager = LinearLayoutManager(activity)
         binding.playerList.adapter = adapter
-    }
-
-    private fun createPlayer() {
-
-        adapter.notifyItemInserted(playerViewModel.onCreatePlayer())
-//        binding.playerList.layoutManager?.scrollToPosition(playerMutableList.size - 1)
 
     }
 
@@ -103,6 +81,7 @@ class PlayersFragment : Fragment() {
         )
             .setMessage("¿Quieres eliminar a ${playerViewModel.getPlayerName(playerPos)}?")
             .setPositiveButton("Si") { _, _ ->
+                Log.i("onDelete", "playerPos before onDelete: $playerPos")
                 playerViewModel.onDelete(playerPos)
                 adapter.notifyItemRemoved(playerPos)
 

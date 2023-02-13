@@ -1,6 +1,8 @@
 package com.example.betbracket.players.playerForm
 
+import android.inputmethodservice.Keyboard
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -12,12 +14,16 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
 import com.example.betbracket.players.Player
 import com.example.betbracket.players.PlayerProvider
+import com.example.betbracket.players.PlayerViewModel
 import com.example.betbracket.players.adapter.PlayerAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,15 +36,17 @@ class PlayerFormFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var toolBar: MaterialToolbar
-    private val playerMutableList: MutableList<Player> = PlayerProvider.playerList.toMutableList()
     private lateinit var adapter: PlayerAdapter
-
+    private val playerViewModel: PlayerViewModel by viewModels({requireParentFragment()})
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflate the layout to use as dialog or embedded fragment
         _binding = FragmentPlayerFormBinding.inflate(inflater, container, false)
+
+
+
         animateBottomNav()
         setUpToolbar()
 
@@ -92,11 +100,17 @@ class PlayerFormFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 if (menuItem.itemId == R.id.guardar_item) {
-                    if (binding.playerNameInput.text != null) {
-                        //TODO(Add or edit player)
+                    if (!binding.playerNameInput.text.isNullOrBlank() && !binding.playerBalanceInput.text.isNullOrBlank()) {
+                        val playerName = binding.playerNameInput.text.toString()
+                        val playerBalance = binding.playerBalanceInput.text.toString().toInt()
+                        Toast.makeText(requireContext(),playerName, Toast.LENGTH_SHORT).show()
+                        playerViewModel.onCreatePlayer(playerName,playerBalance )
+
+                        view.findNavController().navigate(R.id.action_playerFormFragment_to_playersFragment)
+                    }else{
+                        Toast.makeText(requireContext(),"que haces wachin ponele nombre", Toast.LENGTH_SHORT).show()
+
                     }
-                    view.findNavController()
-                        .navigate(R.id.action_playerFormFragment_to_playersFragment)
 
 
                 }

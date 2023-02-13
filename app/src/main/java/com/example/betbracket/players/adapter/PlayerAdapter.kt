@@ -9,7 +9,7 @@ import com.example.betbracket.R
 import com.example.betbracket.players.Player
 
 class PlayerAdapter(
-    var playerList: MutableList<Player> = emptyList<Player>().toMutableList(),
+    var playerList: List<Player>,
     private val onClickDelete: (Int) -> Unit,
 
     ) : RecyclerView.Adapter<PlayerViewHolder>() {
