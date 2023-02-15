@@ -1,12 +1,10 @@
 package com.example.betbracket.players
 
-import android.net.PlatformVpnProfile
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.betbracket.players.adapter.PlayerAdapter
 import kotlinx.coroutines.launch
 
 class PlayerViewModel : ViewModel() {
@@ -37,9 +35,6 @@ class PlayerViewModel : ViewModel() {
         _playerCount.value = PlayerProvider.getPlayerCount()
     }
 
-    fun getPlayerName(pos: Int): String {
-        return PlayerProvider.getPlayerName(pos)
-    }
 
 
 
@@ -62,5 +57,8 @@ class PlayerViewModel : ViewModel() {
         PlayerProvider.updatePlayer(pos,name,balance)
         _playerList.value = getPlayers()
     }
+
+    fun getPlayerName(pos: Int): String = PlayerProvider.getPlayerName(pos)
+    fun getPlayerBalance(pos: Int): Int = PlayerProvider.getPlayerBalance(pos)
 
 }

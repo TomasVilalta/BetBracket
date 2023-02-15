@@ -6,20 +6,14 @@ import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayersBinding
 import com.example.betbracket.players.adapter.PlayerAdapter
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PlayersFragment : Fragment() {
@@ -41,25 +35,24 @@ class PlayersFragment : Fragment() {
         initRecyclerView()
 
         // Observers
-        playerViewModel.playerCount.observe(viewLifecycleOwner, Observer { newPlayerCount ->
+        playerViewModel.playerCount.observe(viewLifecycleOwner) { newPlayerCount ->
             binding.playerCountText.text = getString(R.string.jugadoresCount, newPlayerCount)
             if (newPlayerCount == 0) {
                 showEmptyListUI()
             } else {
                 hideEmptyListUI()
             }
-        })
+        }
 
-        playerViewModel.playerList.observe(viewLifecycleOwner, Observer { playerList ->
+        playerViewModel.playerList.observe(viewLifecycleOwner) { playerList ->
             Log.i("VIEWMODEL", "playerList Observed! -> $playerList")
-
             adapter.playerList = playerList
             adapter.notifyDataSetChanged()
-        })
+        }
 
         //  Click listeners
         binding.addFab.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_playersFragment_to_playerFormFragment)
+            view.findNavController().navigate(PlayersFragmentDirections.actionPlayersFragmentToPlayerFormFragment())
         }
 
         return binding.root
@@ -75,9 +68,7 @@ class PlayersFragment : Fragment() {
     }
 
     private fun onEditItem(playerPos: Int) {
-        //TODO --> probably navigate to Playerformfragment
-        //          and pass it the player position to
-        //          fill the edit texts
+        this.findNavController().navigate(PlayersFragmentDirections.actionPlayersFragmentToPlayerFormFragment(playerPos))
     }
 
     private fun onDeleteItem(playerPos: Int) {

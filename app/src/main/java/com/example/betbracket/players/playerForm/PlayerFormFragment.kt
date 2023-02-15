@@ -1,6 +1,5 @@
 package com.example.betbracket.players.playerForm
 
-import android.inputmethodservice.Keyboard
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -12,22 +11,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
-import com.example.betbracket.players.Player
-import com.example.betbracket.players.PlayerProvider
 import com.example.betbracket.players.PlayerViewModel
 import com.example.betbracket.players.adapter.PlayerAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.android.awaitFrame
 
 
 class PlayerFormFragment : Fragment() {
@@ -36,8 +28,8 @@ class PlayerFormFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var toolBar: MaterialToolbar
-    private lateinit var adapter: PlayerAdapter
-    private val playerViewModel: PlayerViewModel by viewModels({requireParentFragment()})
+    private lateinit var args: PlayerFormFragmentArgs
+    private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,12 +37,23 @@ class PlayerFormFragment : Fragment() {
         // Inflate the layout to use as dialog or embedded fragment
         _binding = FragmentPlayerFormBinding.inflate(inflater, container, false)
 
+        // Default playerPos is -1, which means the user is creating a new player
+        args = PlayerFormFragmentArgs.fromBundle(requireArguments())
+        Log.i("ARGS", "${args.playerPos}")
 
+        if (args.playerPos != -1) {
+            fillPlayerFields()
+        }
 
         animateBottomNav()
         setUpToolbar()
 
         return binding.root
+    }
+
+    private fun fillPlayerFields() {
+        binding.playerNameInput.setText(playerViewModel.getPlayerName(args.playerPos))
+        binding.playerBalanceInput.setText(playerViewModel.getPlayerBalance(args.playerPos).toString())
     }
 
 
@@ -103,12 +106,30 @@ class PlayerFormFragment : Fragment() {
                     if (!binding.playerNameInput.text.isNullOrBlank() && !binding.playerBalanceInput.text.isNullOrBlank()) {
                         val playerName = binding.playerNameInput.text.toString()
                         val playerBalance = binding.playerBalanceInput.text.toString().toInt()
-                        Toast.makeText(requireContext(),playerName, Toast.LENGTH_SHORT).show()
-                        playerViewModel.onCreatePlayer(playerName,playerBalance )
+                        if (args.playerPos == -1) {
+                            playerViewModel.onCreatePlayer(playerName, playerBalance)
+                            Toast.makeText(
+                                requireContext(),
+                                "Jugador creado",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            playerViewModel.onEditPlayer(args.playerPos, playerName, playerBalance)
+                            Toast.makeText(
+                                requireContext(),
+                                "Jugador actualizado",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        view.findNavController()
+                            .navigate(PlayerFormFragmentDirections.actionPlayerFormFragmentToPlayersFragment())
 
-                        view.findNavController().navigate(R.id.action_playerFormFragment_to_playersFragment)
-                    }else{
-                        Toast.makeText(requireContext(),"que haces wachin ponele nombre", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Nombre y balance deben estar completos",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                     }
 

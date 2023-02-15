@@ -11,6 +11,8 @@ class PlayerProvider {
 
         fun getPlayerName(pos: Int): String = playerList[pos].name
 
+        fun getPlayerBalance(pos: Int): Int = playerList[pos].balance
+
         fun insertPlayer(player: Player){
             playerList.add(player)
         }
@@ -19,6 +21,7 @@ class PlayerProvider {
         }
 
         fun getPlayers(): List<Player> = playerList
+
 
         private val playerList = mutableListOf<Player>(
             Player("Juan", 100, 14),
