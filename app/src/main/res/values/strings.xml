@@ -7,4 +7,10 @@
     <string name="rankings">Rankings</string>
     <string name="configuracion">Configuracion</string>
     <string name="jugadoresCount">Jugadores %1$d</string>
+    <string name="avatar">Avatar</string>
+    <string name="subir_foto">Subir foto</string>
+    <string name="nombre_del_jugador">Nombre del Jugador</string>
+    <string name="alex_cremento">Alex Cremento</string>
+    <string name="balance">Balance</string>
+    <string name="_100">100</string>
 </resources>
