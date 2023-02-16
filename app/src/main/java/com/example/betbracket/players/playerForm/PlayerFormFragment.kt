@@ -1,13 +1,17 @@
 package com.example.betbracket.players.playerForm
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -120,6 +124,7 @@ class PlayerFormFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                        closeKeyboard()
                         view.findNavController()
                             .navigate(PlayerFormFragmentDirections.actionPlayerFormFragmentToPlayersFragment())
 
@@ -137,6 +142,14 @@ class PlayerFormFragment : Fragment() {
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun closeKeyboard() {
+        this.binding.playerBalanceInput?.let { view ->
+            val imm = (activity as AppCompatActivity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
     }
 
 

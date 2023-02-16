@@ -43,8 +43,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+15"
+            android:gravity="end"
             android:textColor="@color/successColor"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

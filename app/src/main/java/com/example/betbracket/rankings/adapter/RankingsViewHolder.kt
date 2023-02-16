@@ -15,32 +15,39 @@ class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
     fun render(player: Player) {
-        binding.playerName.text = player.name
-        binding.balanceText.text = viewContext.getString(R.string.playerBalance, player.balance)
-        if (player.lastWagerResult < 0) {
-            binding.lastWagerText.setTextColor(ContextCompat.getColor(viewContext, R.color.error))
-            binding.lastWagerText.text = player.lastWagerResult.toString()
-        } else if (player.lastWagerResult > 0) {
-            binding.lastWagerText.setTextColor(
-                ContextCompat.getColor(
-                    viewContext,
-                    R.color.successColor
+        binding.apply {
+            playerName.text = player.name
+            balanceText.text = viewContext.getString(R.string.playerBalance, player.balance)
+            if (player.lastWagerResult < 0) {
+                lastWagerText.setTextColor(
+                    ContextCompat.getColor(
+                        viewContext,
+                        R.color.error
+                    )
                 )
-            )
-            binding.lastWagerText.text =
-                viewContext.getString(R.string.positiveIntFormat, player.lastWagerResult)
-        } else {
-            binding.lastWagerText.setTextColor(
-                ContextCompat.getColor(
-                    viewContext,
-                    R.color.onSecondaryContainer
+                lastWagerText.text = player.lastWagerResult.toString()
+            } else if (player.lastWagerResult > 0) {
+                lastWagerText.setTextColor(
+                    ContextCompat.getColor(
+                        viewContext,
+                        R.color.successColor
+                    )
                 )
-            )
-            binding.lastWagerText.text =
-                viewContext.getString(R.string.positiveIntFormat, player.lastWagerResult)
+                lastWagerText.text =
+                    viewContext.getString(R.string.positiveIntFormat, player.lastWagerResult)
+            } else {
+                lastWagerText.setTextColor(
+                    ContextCompat.getColor(
+                        viewContext,
+                        R.color.onSecondaryContainer
+                    )
+                )
+                lastWagerText.text =
+                    viewContext.getString(R.string.positiveIntFormat, player.lastWagerResult)
+            }
+
+
         }
 
-
     }
-
 }

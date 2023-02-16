@@ -20,12 +20,8 @@ class PlayerViewModel : ViewModel() {
         viewModelScope.launch {
             _playerList.value = getPlayers()
             updatePlayerCount()
-        }
-    }
 
-    override fun onCleared() {
-        Log.i("VIEWMODEL", "DESTROYED")
-        super.onCleared()
+        }
     }
 
     fun getPlayers() = PlayerProvider.getPlayers()

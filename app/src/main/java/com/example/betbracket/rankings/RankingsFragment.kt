@@ -26,12 +26,11 @@ class RankingsFragment : MainScreenAbstractFragment() {
     ): View? {
         _binding = FragmentRankingsBinding.inflate(inflater, container, false)
         initRecyclerView()
-
         return binding.root
     }
 
     private fun initRecyclerView() {
-        adapter = RankingsAdapter(rankingList)
+        adapter = RankingsAdapter(rankingList.sortedByDescending { it.balance })
         binding.rankingsList.layoutManager = LinearLayoutManager(activity)
         binding.rankingsList.adapter = adapter
     }
