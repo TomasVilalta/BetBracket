@@ -40,7 +40,7 @@
     <color name="surfaceTint">#70D2FF</color>
     <color name="outlineVariant">#40484C</color>
     <color name="scrim">#000000</color>
-
+    <color name="successColor">#9CCC65</color>
 
 
 </resources>

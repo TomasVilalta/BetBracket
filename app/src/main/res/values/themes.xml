@@ -17,6 +17,10 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
+    <style name="aaa" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textColor">@color/inverseOnSurface</item>
+    </style>
+
 
     <!-- BOTTOM NAV THEME   -->
     <style name="Widget.BetBracket.Toolbar.BottomNavigationView.Colored" parent="Widget.MaterialComponents.BottomNavigationView.Colored">

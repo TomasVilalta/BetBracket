@@ -5,18 +5,18 @@ import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.betbracket.MainScreenAbstractFragment
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayersBinding
 import com.example.betbracket.players.adapter.PlayerAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class PlayersFragment : Fragment() {
+class PlayersFragment : MainScreenAbstractFragment() {
 
     private lateinit var playerViewModel: PlayerViewModel
     private var _binding: FragmentPlayersBinding? = null
@@ -31,7 +31,6 @@ class PlayersFragment : Fragment() {
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
         Log.i("VIEWMODEL", "ASSIGNED TO PLAYER FRAG")
         playerViewModel = ViewModelProvider(this)[PlayerViewModel::class.java]
-
         initRecyclerView()
 
         // Observers

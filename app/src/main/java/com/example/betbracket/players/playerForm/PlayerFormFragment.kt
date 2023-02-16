@@ -17,7 +17,6 @@ import androidx.navigation.findNavController
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
 import com.example.betbracket.players.PlayerViewModel
-import com.example.betbracket.players.adapter.PlayerAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

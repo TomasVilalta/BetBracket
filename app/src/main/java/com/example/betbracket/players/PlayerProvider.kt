@@ -24,7 +24,7 @@ class PlayerProvider {
 
 
         private val playerList = mutableListOf<Player>(
-            Player("Juan", 100, 14),
+            Player("Juan", 100, -14),
             Player("Pepe", 74, 21)
         )
     }
