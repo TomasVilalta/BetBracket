@@ -14,7 +14,7 @@ import com.example.betbracket.rankings.adapter.RankingsAdapter
 
 class RankingsFragment : MainScreenAbstractFragment() {
 
-    val rankingList: List<Player> = PlayerProvider.getPlayers()
+    private val rankingList: List<Player> = PlayerProvider.getPlayers()
     lateinit var adapter: RankingsAdapter
     private var _binding: FragmentRankingsBinding? = null
     private val binding get() = _binding!!
@@ -26,6 +26,11 @@ class RankingsFragment : MainScreenAbstractFragment() {
     ): View? {
         _binding = FragmentRankingsBinding.inflate(inflater, container, false)
         initRecyclerView()
+        if (rankingList.isEmpty()){
+            binding.noPlayersText.visibility = View.VISIBLE
+            binding.noPlayersTextBody.visibility = View.VISIBLE
+            binding.sadfaceImageView.visibility = View.VISIBLE
+        }
         return binding.root
     }
 

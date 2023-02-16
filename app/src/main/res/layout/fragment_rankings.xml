@@ -15,5 +15,44 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/sadface_imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:elevation="5dp"
+        android:src="@drawable/sad_emoji"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/noPlayers_text"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Mm..."
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/sadface_imageView"
+        app:layout_constraintStart_toStartOf="@+id/sadface_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/sadface_imageView"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/noPlayers_text_body"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Necesitas jugadores para rankearlos"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/sadface_imageView"
+        app:layout_constraintStart_toStartOf="@+id/sadface_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/noPlayers_text"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
