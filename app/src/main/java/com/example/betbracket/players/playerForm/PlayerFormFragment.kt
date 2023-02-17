@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
 import com.example.betbracket.players.PlayerViewModel
@@ -40,6 +41,10 @@ class PlayerFormFragment : Fragment() {
         // Inflate the layout to use as dialog or embedded fragment
         _binding = FragmentPlayerFormBinding.inflate(inflater, container, false)
 
+        playerViewModel.playerImage.observe(viewLifecycleOwner){newImage ->
+            Log.i("AVATAR", "OBSERVED")
+            Glide.with(this).load(newImage).into(binding.playerImage)
+        }
         // Default playerPos is -1, which means the user is creating a new player
         args = PlayerFormFragmentArgs.fromBundle(requireArguments())
         Log.i("ARGS", "${args.playerPos}")
@@ -50,6 +55,12 @@ class PlayerFormFragment : Fragment() {
 
         animateBottomNav()
         setUpToolbar()
+
+
+
+        binding.avatarButton.setOnClickListener{
+           AvatarDialogFragment().show(childFragmentManager, AvatarDialogFragment.TAG)
+        }
 
         return binding.root
     }

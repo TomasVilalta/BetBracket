@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.betbracket.players.playerForm.AvatarProvider
 import kotlinx.coroutines.launch
 
 class PlayerViewModel : ViewModel() {
@@ -15,10 +16,15 @@ class PlayerViewModel : ViewModel() {
     private val _playerCount = MutableLiveData<Int>()
     val playerCount: LiveData<Int> get() = _playerCount
 
+    private val _playerImage = MutableLiveData<String>()
+    val playerImage: LiveData<String> get() = _playerImage
+
     init {
-        Log.i("VIEWMODEL", "CREATED")
+
         viewModelScope.launch {
             _playerList.value = getPlayers()
+            Log.i("AVATAR", "init")
+            _playerImage.value = AvatarProvider.defaultAvatar
             updatePlayerCount()
 
         }
@@ -35,8 +41,10 @@ class PlayerViewModel : ViewModel() {
 
 
     fun onCreatePlayer(name: String, balance: Int) {
-        val newPlayer = Player(name, balance)
-        PlayerProvider.insertPlayer(newPlayer)
+        val newPlayer = _playerImage.value?.let { Player(name, balance, it) }
+        if (newPlayer != null) {
+            PlayerProvider.insertPlayer(newPlayer)
+        }
         Log.i("VIEWMODEL", "Player Created")
         _playerList.value = getPlayers()
         updatePlayerCount()
@@ -56,5 +64,10 @@ class PlayerViewModel : ViewModel() {
 
     fun getPlayerName(pos: Int): String = PlayerProvider.getPlayerName(pos)
     fun getPlayerBalance(pos: Int): Int = PlayerProvider.getPlayerBalance(pos)
+    fun setCurrentPlayerImage(url: String) {
+        Log.i("AVATAR", "CREATED")
+        _playerImage.value = url
+
+    }
 
 }

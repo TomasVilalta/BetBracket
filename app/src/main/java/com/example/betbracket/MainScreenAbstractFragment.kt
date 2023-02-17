@@ -24,4 +24,6 @@ abstract class MainScreenAbstractFragment: Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
+
 }

@@ -47,6 +47,7 @@ class PlayersFragment : MainScreenAbstractFragment() {
             Log.i("VIEWMODEL", "playerList Observed! -> $playerList")
             adapter.playerList = playerList
             adapter.notifyDataSetChanged()
+
         }
 
         //  Click listeners

@@ -5,15 +5,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".events.EventsFragment">
+    tools:context=".events.fragments.EventsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="DIOS MIO ME ESTOY QUEDANDO LOCO" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/event_count_text"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="16 Jugadores"
+            app:layout_constraintEnd_toStartOf="@id/line_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/line_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/outline"
+            app:layout_constraintBottom_toBottomOf="@id/event_count_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/event_count_text"
+            app:layout_constraintTop_toTopOf="@id/event_count_text"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/event_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_count_text"
+
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_fab"
+            style="@style/Widget.BetBracket.FloatingActionButton"
+            android:layout_width="227dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_events_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/sadface_imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:elevation="5dp"
+            android:src="@drawable/cry_emoji"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <TextView
+            android:id="@+id/noPlayers_text"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Oh no!!"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/sadface_imageView"
+            app:layout_constraintStart_toStartOf="@+id/sadface_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/sadface_imageView" />
+
+        <TextView
+            android:id="@+id/noPlayers_text_body"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Parece que no tenés amigos"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/sadface_imageView"
+            app:layout_constraintStart_toStartOf="@+id/sadface_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/noPlayers_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

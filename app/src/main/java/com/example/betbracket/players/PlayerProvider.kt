@@ -26,8 +26,8 @@ class PlayerProvider {
 
 
         private val playerList = mutableListOf<Player>(
-            Player("Juan", 100, -14),
-            Player("Pepe", 74, 21)
+            Player("Juan", 100,"https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" ,-14),
+            Player("Pepe", 74,"https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" ,21)
         )
     }
 

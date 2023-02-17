@@ -7,9 +7,13 @@
 
     <fragment
         android:id="@+id/eventsFragment"
-        android:name="com.example.betbracket.events.EventsFragment"
+        android:name="com.example.betbracket.events.fragments.EventsFragment"
         android:label="Eventos"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_eventsFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/rankingsFragment"
         android:name="com.example.betbracket.rankings.RankingsFragment"
@@ -47,4 +51,9 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.example.betbracket.events.fragments.CreateEventFragment"
+        android:label="fragment_create_event"
+        tools:layout="@layout/fragment_create_event" />
 </navigation>
