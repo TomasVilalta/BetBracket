@@ -16,7 +16,7 @@ import com.example.betbracket.players.PlayerViewModel
 class AvatarDialogFragment : DialogFragment() {
     private var _binding: FragmentAvatarDialogBinding? = null
     private val binding get() = _binding!!
-    private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment() })
+    private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment().requireParentFragment() })
     private lateinit var adapter: AvatarDialogAdapter
 
     override fun onCreateView(
@@ -44,6 +44,7 @@ class AvatarDialogFragment : DialogFragment() {
     private fun onAvatarSelect(pos: Int) {
         Log.i("AVATAR", "${pos}th item selected")
         playerViewModel.setCurrentPlayerImage(AvatarProvider.imageList[pos])
+        dismiss()
 
     }
 

@@ -45,12 +45,15 @@ class PlayerFormFragment : Fragment() {
             Log.i("AVATAR", "OBSERVED")
             Glide.with(this).load(newImage).into(binding.playerImage)
         }
+
         // Default playerPos is -1, which means the user is creating a new player
         args = PlayerFormFragmentArgs.fromBundle(requireArguments())
         Log.i("ARGS", "${args.playerPos}")
 
         if (args.playerPos != -1) {
             fillPlayerFields()
+        } else{
+            playerViewModel.setCurrentPlayerImage("default")
         }
 
         animateBottomNav()
@@ -68,6 +71,7 @@ class PlayerFormFragment : Fragment() {
     private fun fillPlayerFields() {
         binding.playerNameInput.setText(playerViewModel.getPlayerName(args.playerPos))
         binding.playerBalanceInput.setText(playerViewModel.getPlayerBalance(args.playerPos).toString())
+        playerViewModel.setCurrentPlayerImage(playerViewModel.getPlayerImage(args.playerPos))
     }
 
 

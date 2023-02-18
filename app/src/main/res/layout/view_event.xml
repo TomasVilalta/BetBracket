@@ -34,6 +34,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="@dimen/margin_small"
+            android:scaleType="centerCrop"
             android:src="@drawable/descarga"
             app:layout_constraintEnd_toStartOf="@id/versus_text"
             app:layout_constraintHorizontal_chainStyle="spread_inside"

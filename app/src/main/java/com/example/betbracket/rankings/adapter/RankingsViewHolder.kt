@@ -4,6 +4,7 @@ import android.icu.text.NumberFormat
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.databinding.ViewRankingBinding
 import com.example.betbracket.players.Player
@@ -18,6 +19,8 @@ class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.apply {
             playerName.text = player.name
             balanceText.text = viewContext.getString(R.string.playerBalance, player.balance)
+            Glide.with(binding.playerImage.context).load(player.image).into(binding.playerImage)
+
             if (player.lastWagerResult < 0) {
                 lastWagerText.setTextColor(
                     ContextCompat.getColor(
