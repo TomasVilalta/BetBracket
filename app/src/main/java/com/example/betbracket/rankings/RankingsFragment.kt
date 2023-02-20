@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.betbracket.MainScreenAbstractFragment
+import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.databinding.FragmentRankingsBinding
 import com.example.betbracket.players.Player
 import com.example.betbracket.players.PlayerProvider

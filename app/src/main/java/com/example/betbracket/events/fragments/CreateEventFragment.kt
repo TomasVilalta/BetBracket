@@ -11,11 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import com.example.betbracket.R
+import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
 import com.example.betbracket.databinding.FragmentCreateEventBinding
 import com.example.betbracket.events.EventViewModel
 
 
-class CreateEventFragment : Fragment() {
+class CreateEventFragment : SecondaryScreenAbstractFragment() {
 
     private var _binding: FragmentCreateEventBinding? = null
     private val binding get() = _binding!!
@@ -26,7 +27,8 @@ class CreateEventFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCreateEventBinding.inflate(layoutInflater, container, false)
-
+        animateBottomNav()
+        setUpToolbar()
         return binding.root
 
     }

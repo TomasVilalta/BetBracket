@@ -1,4 +1,4 @@
-package com.example.betbracket
+package com.example.betbracket.abstractFragments
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,6 +9,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import com.example.betbracket.R
 
 abstract class MainScreenAbstractFragment: Fragment() {
 

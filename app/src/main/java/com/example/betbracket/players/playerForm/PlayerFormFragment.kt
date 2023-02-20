@@ -10,8 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -20,18 +18,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.betbracket.R
+import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
 import com.example.betbracket.players.PlayerViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class PlayerFormFragment : Fragment() {
+class PlayerFormFragment : SecondaryScreenAbstractFragment() {
 
     private var _binding: FragmentPlayerFormBinding? = null
     private val binding get() = _binding!!
-    private lateinit var bottomNav: BottomNavigationView
-    private lateinit var toolBar: MaterialToolbar
+//    private lateinit var bottomNav: BottomNavigationView
+//    private lateinit var toolBar: MaterialToolbar
     private lateinit var args: PlayerFormFragmentArgs
     private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment() })
 
@@ -75,42 +74,42 @@ class PlayerFormFragment : Fragment() {
     }
 
 
-    private fun setUpToolbar() {
-        val toolBarAnimation: Animation = animateBottomNav()
-        toolBar = (activity as AppCompatActivity).findViewById<MaterialToolbar>(R.id.topAppBar)
-        toolBar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close_24)
-        toolBar.setNavigationIconTint(
-            ContextCompat.getColor(
-                requireContext(), R.color.onBackground
-            )
-        )
-        toolBar.startAnimation(toolBarAnimation)
-    }
-
-    private fun animateBottomNav(): Animation {
-        bottomNav =
-            (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNav.visibility = View.GONE
-        val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
-            requireContext(), R.anim.slide_down_out
-        )
-        bottomNav.startAnimation(bottomNavAnimation)
-        return AnimationUtils.loadAnimation(
-            requireContext(), androidx.navigation.ui.R.anim.nav_default_enter_anim
-        )
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
-            requireContext(),
-            R.anim.slide_up_in
-        )
-        bottomNav.startAnimation(bottomNavAnimation)
-
-        bottomNav.visibility = View.VISIBLE
-    }
+//    private fun setUpToolbar() {
+//        val toolBarAnimation: Animation = animateBottomNav()
+//        toolBar = (activity as AppCompatActivity).findViewById<MaterialToolbar>(R.id.topAppBar)
+//        toolBar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close_24)
+//        toolBar.setNavigationIconTint(
+//            ContextCompat.getColor(
+//                requireContext(), R.color.onBackground
+//            )
+//        )
+//        toolBar.startAnimation(toolBarAnimation)
+//    }
+//
+//    private fun animateBottomNav(): Animation {
+//        bottomNav =
+//            (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+//        bottomNav.visibility = View.GONE
+//        val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
+//            requireContext(), R.anim.slide_down_out
+//        )
+//        bottomNav.startAnimation(bottomNavAnimation)
+//        return AnimationUtils.loadAnimation(
+//            requireContext(), androidx.navigation.ui.R.anim.nav_default_enter_anim
+//        )
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//
+//        val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
+//            requireContext(),
+//            R.anim.slide_up_in
+//        )
+//        bottomNav.startAnimation(bottomNavAnimation)
+//
+//        bottomNav.visibility = View.VISIBLE
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menuHost: MenuHost = requireActivity()

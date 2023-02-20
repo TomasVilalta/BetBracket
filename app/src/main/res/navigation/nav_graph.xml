@@ -62,8 +62,7 @@
     <fragment
         android:id="@+id/eventDetailFragment"
         android:name="com.example.betbracket.events.fragments.EventDetailFragment"
-        android:label="fragment_event_detail"
-        tools:layout="@layout/fragment_event_detail" >
+        tools:layout="@layout/fragment_event_detail">
         <argument
             android:name="eventPos"
             app:argType="integer" />

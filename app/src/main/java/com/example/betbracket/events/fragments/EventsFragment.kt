@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.betbracket.MainScreenAbstractFragment
+import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.R
 import com.example.betbracket.databinding.FragmentEventsBinding
 import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.adapter.EventsAdapter
-import com.example.betbracket.events.providers.EventProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class EventsFragment : MainScreenAbstractFragment() {
@@ -60,7 +60,17 @@ class EventsFragment : MainScreenAbstractFragment() {
     }
 
     private fun eventClickDelete(event: Int) {
-        eventViewModel.onDeleteEvent(event)
+        MaterialAlertDialogBuilder(
+            this.requireContext(),
+            R.style.AlertDialog_BetBracket
+        )
+            .setMessage("¿Quieres eliminar ${eventViewModel.getEvents()[event].title}?")
+            .setPositiveButton("Si") { _, _ ->
+                eventViewModel.onDeleteEvent(event)
+            }
+            .setNegativeButton("No") { _, _ ->
+            }.show()
+
     }
 
 }
