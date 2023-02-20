@@ -8,6 +8,9 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:colorBackground">@color/colorAccent</item>
         <item name="font">@font/noto_sans</item>
+        <item name="popupMenuBackground">@color/secondaryContainer</item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.MaterialComponents.Body2</item>
     </style>
 
     <!--    TOOLBAR THEME-->

@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".events.fragments.CreateEventFragment">
 
     <TextView
         android:id="@+id/title_text"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:text="Nuevo Evento"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
         android:textColor="@color/onBackground"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/event_title_input"
+        android:id="@+id/event_title_input_layout"
         style="@style/TextInputLayout.BetBracket"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium"
         android:hint="Titulo"
         android:textColor="@color/onBackground"
         android:textColorHint="@color/outline"
@@ -35,6 +34,7 @@
         app:passwordToggleEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/event_title_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/onBackground" />
@@ -45,21 +45,23 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginHorizontal="@dimen/margin_small"
-        app:boxStrokeColor="@color/text_input_box_color"
-
+        android:layout_marginTop="@dimen/margin_medium"
         android:hint="Jugador 1"
         android:textColor="@color/onBackground"
         android:textColorHint="@color/outline"
+        app:boxStrokeColor="@color/text_input_box_color"
         app:layout_constraintEnd_toStartOf="@id/versus_text"
         app:layout_constraintStart_toStartOf="@id/title_text"
-        app:layout_constraintTop_toBottomOf="@id/event_title_input"
-        app:passwordToggleEnabled="false">
+        app:layout_constraintTop_toBottomOf="@id/event_title_input_layout"
+        app:passwordToggleEnabled="false"
+        app:errorEnabled="true">
 
-        <AutoCompleteTextView
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/player_1_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="none"
             android:textColor="@color/onBackground" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,23 +81,24 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginHorizontal="@dimen/margin_small"
-        app:boxStrokeColor="@color/text_input_box_color"
+        android:layout_marginTop="@dimen/margin_medium"
         android:hint="Jugador 2"
         android:textColor="@color/onBackground"
         android:textColorHint="@color/outline"
-        app:layout_constraintEnd_toEndOf="@id/event_title_input"
+        app:boxStrokeColor="@color/text_input_box_color"
+        app:layout_constraintEnd_toEndOf="@id/event_title_input_layout"
         app:layout_constraintStart_toEndOf="@id/versus_text"
-        app:layout_constraintTop_toBottomOf="@id/event_title_input"
+        app:layout_constraintTop_toBottomOf="@id/event_title_input_layout"
         app:passwordToggleEnabled="false">
 
         <AutoCompleteTextView
+            android:id="@+id/player_2_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="none"
             android:textColor="@color/onBackground" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
