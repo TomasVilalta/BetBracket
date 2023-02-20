@@ -4,15 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
@@ -21,26 +17,21 @@ import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
 import com.example.betbracket.players.PlayerViewModel
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class PlayerFormFragment : SecondaryScreenAbstractFragment() {
 
     private var _binding: FragmentPlayerFormBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var bottomNav: BottomNavigationView
-//    private lateinit var toolBar: MaterialToolbar
     private lateinit var args: PlayerFormFragmentArgs
     private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout to use as dialog or embedded fragment
         _binding = FragmentPlayerFormBinding.inflate(inflater, container, false)
 
-        playerViewModel.playerImage.observe(viewLifecycleOwner){newImage ->
+        playerViewModel.playerImage.observe(viewLifecycleOwner) { newImage ->
             Log.i("AVATAR", "OBSERVED")
             Glide.with(this).load(newImage).into(binding.playerImage)
         }
@@ -51,17 +42,15 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
 
         if (args.playerPos != -1) {
             fillPlayerFields()
-        } else{
+        } else {
             playerViewModel.setCurrentPlayerImage("default")
         }
 
         animateBottomNav()
         setUpToolbar()
 
-
-
-        binding.avatarButton.setOnClickListener{
-           AvatarDialogFragment().show(childFragmentManager, AvatarDialogFragment.TAG)
+        binding.avatarButton.setOnClickListener {
+            AvatarDialogFragment().show(childFragmentManager, AvatarDialogFragment.TAG)
         }
 
         return binding.root
@@ -69,47 +58,11 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
 
     private fun fillPlayerFields() {
         binding.playerNameInput.setText(playerViewModel.getPlayerName(args.playerPos))
-        binding.playerBalanceInput.setText(playerViewModel.getPlayerBalance(args.playerPos).toString())
+        binding.playerBalanceInput.setText(
+            playerViewModel.getPlayerBalance(args.playerPos).toString()
+        )
         playerViewModel.setCurrentPlayerImage(playerViewModel.getPlayerImage(args.playerPos))
     }
-
-
-//    private fun setUpToolbar() {
-//        val toolBarAnimation: Animation = animateBottomNav()
-//        toolBar = (activity as AppCompatActivity).findViewById<MaterialToolbar>(R.id.topAppBar)
-//        toolBar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close_24)
-//        toolBar.setNavigationIconTint(
-//            ContextCompat.getColor(
-//                requireContext(), R.color.onBackground
-//            )
-//        )
-//        toolBar.startAnimation(toolBarAnimation)
-//    }
-//
-//    private fun animateBottomNav(): Animation {
-//        bottomNav =
-//            (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//        bottomNav.visibility = View.GONE
-//        val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
-//            requireContext(), R.anim.slide_down_out
-//        )
-//        bottomNav.startAnimation(bottomNavAnimation)
-//        return AnimationUtils.loadAnimation(
-//            requireContext(), androidx.navigation.ui.R.anim.nav_default_enter_anim
-//        )
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//
-//        val bottomNavAnimation: Animation = AnimationUtils.loadAnimation(
-//            requireContext(),
-//            R.anim.slide_up_in
-//        )
-//        bottomNav.startAnimation(bottomNavAnimation)
-//
-//        bottomNav.visibility = View.VISIBLE
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menuHost: MenuHost = requireActivity()
@@ -148,10 +101,7 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
                             "Nombre y balance deben estar completos",
                             Toast.LENGTH_SHORT
                         ).show()
-
                     }
-
-
                 }
                 return false
             }
@@ -160,7 +110,8 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
 
     private fun closeKeyboard() {
         this.binding.playerBalanceInput?.let { view ->
-            val imm = (activity as AppCompatActivity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val imm =
+                (activity as AppCompatActivity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
 

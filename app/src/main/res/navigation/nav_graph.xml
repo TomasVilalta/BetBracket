@@ -36,8 +36,8 @@
     <fragment
         android:id="@+id/playerFormFragment"
         android:name="com.example.betbracket.players.playerForm.PlayerFormFragment"
-        android:label="Nuevo Jugador"
-        tools:layout="@layout/fragment_player_form" >
+        android:label=" "
+        tools:layout="@layout/fragment_player_form">
         <action
             android:id="@+id/action_playerFormFragment_to_playersFragment"
             app:destination="@id/playersFragment"
@@ -47,14 +47,14 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="playerPos"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/createEventFragment"
         android:name="com.example.betbracket.events.fragments.CreateEventFragment"
-        android:label="fragment_create_event"
-        tools:layout="@layout/fragment_create_event" >
+        android:label=" "
+        tools:layout="@layout/fragment_create_event">
         <action
             android:id="@+id/action_createEventFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
@@ -62,6 +62,7 @@
     <fragment
         android:id="@+id/eventDetailFragment"
         android:name="com.example.betbracket.events.fragments.EventDetailFragment"
+        android:label=" "
         tools:layout="@layout/fragment_event_detail">
         <argument
             android:name="eventPos"
