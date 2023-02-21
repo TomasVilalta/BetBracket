@@ -22,6 +22,10 @@
     <color name="onSecondary">#1F333D</color>
     <color name="secondaryContainer">#364954</color>
     <color name="onSecondaryContainer">#D0E6F3</color>
+    <color name="tertiary">#c8c2ea</color>
+    <color name="onTertiary">#302d4c</color>
+    <color name="tertiaryContainer">#464364</color>
+    <color name="onTertiaryContainer">#e4dfff</color>
     <color name="error">#FFB4AB</color>
     <color name="errorContainer">#93000A</color>
     <color name="onError">#690005</color>

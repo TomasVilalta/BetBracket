@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
 import com.example.betbracket.databinding.FragmentEventDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,6 +27,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
 
         (activity as AppCompatActivity).supportActionBar?.hide()
         animateBottomNav()
+
 
         binding.backButton.setOnClickListener {
             it.findNavController().navigateUp()

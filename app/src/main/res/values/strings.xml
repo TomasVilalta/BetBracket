@@ -15,4 +15,5 @@
     <string name="_100">100</string>
     <string name="playerBalance">$%1$d</string>
     <string name="positiveIntFormat">+%1$d</string>
+    <string name="versus">VS</string>
 </resources>
