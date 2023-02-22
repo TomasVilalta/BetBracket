@@ -38,7 +38,7 @@ class PlayerViewModel : ViewModel() {
     }
 
 
-    fun onCreatePlayer(name: String, balance: Int) {
+    fun onCreatePlayer(name: String, balance: Double) {
         val newPlayer = _playerImage.value?.let { Player(name, balance, it) }
         if (newPlayer != null) {
             PlayerProvider.insertPlayer(newPlayer)
@@ -55,13 +55,13 @@ class PlayerViewModel : ViewModel() {
         updatePlayerCount()
     }
 
-    fun onEditPlayer(pos: Int, name: String, balance: Int) {
+    fun onEditPlayer(pos: Int, name: String, balance: Double) {
         PlayerProvider.updatePlayer(pos, name, balance, _playerImage.value)
         _playerList.value = getPlayers()
     }
 
     fun getPlayerName(pos: Int): String = PlayerProvider.getPlayerName(pos)
-    fun getPlayerBalance(pos: Int): Int = PlayerProvider.getPlayerBalance(pos)
+    fun getPlayerBalance(pos: Int): Double = PlayerProvider.getPlayerBalance(pos)
     fun setCurrentPlayerImage(url: String) {
         if (url != "default") {
             _playerImage.value = url

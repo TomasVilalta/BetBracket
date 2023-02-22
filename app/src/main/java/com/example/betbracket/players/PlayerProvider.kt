@@ -7,7 +7,7 @@ class PlayerProvider {
         fun updatePlayer(
             pos: Int,
             name: String,
-            balance: Int,
+            balance: Double,
             image: String?
         ) {
 
@@ -22,7 +22,7 @@ class PlayerProvider {
 
         fun getPlayerName(pos: Int): String = playerList[pos].name
 
-        fun getPlayerBalance(pos: Int): Int = playerList[pos].balance
+        fun getPlayerBalance(pos: Int): Double = playerList[pos].balance
 
         fun insertPlayer(player: Player) {
             playerList.add(player)
@@ -39,11 +39,11 @@ class PlayerProvider {
         private val playerList = mutableListOf<Player>(
             Player(
                 "Juan",
-                100,
+                100.0,
                 "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-                -14
+                -14.5
             ),
-            Player("Pepe", 74, "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png", 21)
+            Player("Pepe", 74.0, "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png", 21.7)
         )
     }
 

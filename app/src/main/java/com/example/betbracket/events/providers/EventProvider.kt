@@ -11,10 +11,8 @@ class EventProvider {
         private val eventlist = mutableListOf<Event>(
             Event(
                 "EEee si",
-                Player("Juan", 100,"https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" ),
-                Player("Pepe", 100, "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png"),
-                "Not started",
-                mutableListOf<Bet>()
+                Player("Juan", 100.0,"https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" ),
+                Player("Pepe", 100.0, "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png"),
             )
         )
 

@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.databinding.ViewRankingBinding
 import com.example.betbracket.players.Player
+import com.example.betbracket.players.PlayerProvider
+import kotlin.math.roundToInt
 
 class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -15,10 +17,11 @@ class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val viewContext = view.context
 
 
+    private fun roundOff(num: Double):String = (Math.round(num * 100.0) / 100.0).toString()
     fun render(player: Player) {
         binding.apply {
             playerName.text = player.name
-            balanceText.text = viewContext.getString(R.string.playerBalance, player.balance)
+            balanceText.text = viewContext.getString(R.string.playerBalance, roundOff(player.balance))
             Glide.with(binding.playerImage.context).load(player.image).into(binding.playerImage)
 
             if (player.lastWagerResult < 0) {
@@ -37,7 +40,7 @@ class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     )
                 )
                 lastWagerText.text =
-                    viewContext.getString(R.string.positiveIntFormat, player.lastWagerResult)
+                    viewContext.getString(R.string.positiveIntFormat, roundOff(player.lastWagerResult))
             } else {
                 lastWagerText.setTextColor(
                     ContextCompat.getColor(
@@ -46,7 +49,7 @@ class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     )
                 )
                 lastWagerText.text =
-                    viewContext.getString(R.string.positiveIntFormat, player.lastWagerResult)
+                    viewContext.getString(R.string.positiveIntFormat, roundOff(player.lastWagerResult))
             }
 
 

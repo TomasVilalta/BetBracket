@@ -75,7 +75,7 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
                 if (menuItem.itemId == R.id.guardar_item) {
                     if (!binding.playerNameInput.text.isNullOrBlank() && !binding.playerBalanceInput.text.isNullOrBlank()) {
                         val playerName = binding.playerNameInput.text.toString()
-                        val playerBalance = binding.playerBalanceInput.text.toString().toInt()
+                        val playerBalance = binding.playerBalanceInput.text.toString().toDouble()
                         if (args.playerPos == -1) {
                             playerViewModel.onCreatePlayer(playerName, playerBalance)
                             Toast.makeText(
