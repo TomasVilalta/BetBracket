@@ -57,7 +57,9 @@
         tools:layout="@layout/fragment_create_event">
         <action
             android:id="@+id/action_createEventFragment_to_eventsFragment"
-            app:destination="@id/eventsFragment" />
+            app:destination="@id/eventsFragment"
+            app:popUpTo="@id/eventsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/eventDetailFragment"
