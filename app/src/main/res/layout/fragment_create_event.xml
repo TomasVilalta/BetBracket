@@ -28,15 +28,22 @@
         android:hint="Titulo"
         android:textColor="@color/onBackground"
         android:textColorHint="@color/outline"
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+        app:counterTextColor="@color/onBackground"
         app:layout_constraintEnd_toEndOf="@id/title_text"
         app:layout_constraintStart_toStartOf="@id/title_text"
         app:layout_constraintTop_toBottomOf="@id/title_text"
         app:passwordToggleEnabled="false">
 
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/event_title_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="text"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:textColor="@color/onBackground" />
     </com.google.android.material.textfield.TextInputLayout>
 
