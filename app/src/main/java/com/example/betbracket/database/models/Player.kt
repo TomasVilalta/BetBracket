@@ -1,4 +1,4 @@
-package com.example.betbracket.players
+package com.example.betbracket.database.models
 
 data class Player(
     var name: String,

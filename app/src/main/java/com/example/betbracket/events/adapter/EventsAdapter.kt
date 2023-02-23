@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betbracket.R
-import com.example.betbracket.events.models.Event
+import com.example.betbracket.database.models.Event
 
 class EventsAdapter(
     var eventsList: List<Event>,

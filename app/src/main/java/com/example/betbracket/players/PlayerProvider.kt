@@ -1,5 +1,7 @@
 package com.example.betbracket.players
 
+import com.example.betbracket.database.models.Player
+
 class PlayerProvider {
     companion object {
         fun getPlayerCount(): Int = playerList.size

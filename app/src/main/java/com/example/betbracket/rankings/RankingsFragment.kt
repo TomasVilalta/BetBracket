@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.databinding.FragmentRankingsBinding
-import com.example.betbracket.players.Player
+import com.example.betbracket.database.models.Player
 import com.example.betbracket.players.PlayerProvider
 import com.example.betbracket.rankings.adapter.RankingsAdapter
 

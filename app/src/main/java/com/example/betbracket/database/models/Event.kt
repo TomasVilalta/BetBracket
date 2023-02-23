@@ -1,6 +1,4 @@
-package com.example.betbracket.events.models
-
-import com.example.betbracket.players.Player
+package com.example.betbracket.database.models
 
 data class Event(
     val title: String,

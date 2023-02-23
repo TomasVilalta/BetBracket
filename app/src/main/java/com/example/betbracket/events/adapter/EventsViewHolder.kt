@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.betbracket.databinding.ViewEventBinding
-import com.example.betbracket.events.models.Event
+import com.example.betbracket.database.models.Event
 
 class EventsViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ViewEventBinding.bind(view)

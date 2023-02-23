@@ -1,8 +1,7 @@
 package com.example.betbracket.events.providers
 
-import com.example.betbracket.events.models.Bet
-import com.example.betbracket.events.models.Event
-import com.example.betbracket.players.Player
+import com.example.betbracket.database.models.Event
+import com.example.betbracket.database.models.Player
 
 
 class EventProvider {

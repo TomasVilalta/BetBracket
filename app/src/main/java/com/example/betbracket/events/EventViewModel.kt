@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.betbracket.events.models.Event
+import com.example.betbracket.database.models.Event
 import com.example.betbracket.events.providers.EventProvider
-import com.example.betbracket.players.Player
+import com.example.betbracket.database.models.Player
 import com.example.betbracket.players.PlayerProvider
 
 class EventViewModel : ViewModel() {

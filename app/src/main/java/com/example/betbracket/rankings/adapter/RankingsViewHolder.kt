@@ -1,15 +1,12 @@
 package com.example.betbracket.rankings.adapter
 
-import android.icu.text.NumberFormat
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.databinding.ViewRankingBinding
-import com.example.betbracket.players.Player
-import com.example.betbracket.players.PlayerProvider
-import kotlin.math.roundToInt
+import com.example.betbracket.database.models.Player
 
 class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
