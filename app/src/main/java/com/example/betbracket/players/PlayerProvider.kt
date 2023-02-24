@@ -1,6 +1,6 @@
 package com.example.betbracket.players
 
-import com.example.betbracket.database.models.Player
+import com.example.betbracket.database.entities.Player
 
 class PlayerProvider {
     companion object {
@@ -22,7 +22,7 @@ class PlayerProvider {
             }
         }
 
-        fun getPlayerName(pos: Int): String = playerList[pos].name
+
 
         fun getPlayerBalance(pos: Int): Double = playerList[pos].balance
 
@@ -36,7 +36,7 @@ class PlayerProvider {
 
         fun getPlayers(): List<Player> = playerList
         fun getPlayerImage(pos: Int): String = playerList[pos].image
-
+        fun getPlayerName(pos: Int): String = playerList[pos].name
 
         private val playerList = mutableListOf<Player>(
             Player(
