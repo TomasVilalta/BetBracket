@@ -24,7 +24,7 @@ interface BetDao {
     fun getAllPlayers(): LiveData<List<Player>>
 
     @Query("SELECT * from players WHERE name = :playerName" )
-    fun getPlayerByName(playerName: String): Player
+    suspend fun getPlayerByName(playerName: String): Player
 
 
     //  Events

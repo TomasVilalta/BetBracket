@@ -14,6 +14,9 @@ import kotlinx.coroutines.launch
 class EventViewModel(val eventsRepository: EventsRepository) : ViewModel() {
 
 
+    private var _player = MutableLiveData<Player>()
+    val player:LiveData<Player> get() =  _player
+
     fun onCreateEvent(title: String, player1: String, player2: String) = viewModelScope.launch {
             val newEvent = Event(title, player1, player2)
             eventsRepository.insertEvent(newEvent)
@@ -21,14 +24,16 @@ class EventViewModel(val eventsRepository: EventsRepository) : ViewModel() {
 
     fun getEvents() = eventsRepository.getEvents()
 
-    fun getPlayerNameList(): List<String> = PlayerProvider.getPlayers().map { it.name }
 
+
+    fun getPlayers() = eventsRepository.getPlayers()
     fun onDeleteEvent(event: Event)= viewModelScope.launch {
         eventsRepository.deleteEvent(event)
     }
 
-    fun getPlayerByName(playerName: String): Player{
-        return eventsRepository.getPlayerByName(playerName)
+    fun getPlayerByName(playerName: String) = viewModelScope.launch{
+        Log.i("diomio","getPlayerByName called")
+        _player.value = eventsRepository.getPlayerByName(playerName)
     }
 
 

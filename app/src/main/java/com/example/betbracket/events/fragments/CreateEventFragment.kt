@@ -12,15 +12,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
+import com.example.betbracket.database.BetDatabase
 import com.example.betbracket.databinding.FragmentCreateEventBinding
 import com.example.betbracket.events.EventViewModel
+import com.example.betbracket.events.EventViewModelProviderFactory
+import com.example.betbracket.events.EventsRepository
+import com.example.betbracket.players.PlayersRepository
 
 
 class CreateEventFragment : SecondaryScreenAbstractFragment() {
 
     private var _binding: FragmentCreateEventBinding? = null
     private val binding get() = _binding!!
-    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
+    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() }){EventViewModelProviderFactory(
+        EventsRepository(BetDatabase.getInstance(requireContext()))
+    )}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +41,13 @@ class CreateEventFragment : SecondaryScreenAbstractFragment() {
 
     override fun onResume() {
         super.onResume()
-        val players = eventViewModel.getPlayerNameList()
-        val dropDownAdapter = ArrayAdapter(requireContext(),R.layout.dropdown_item, players)
-        binding.player1Input.setAdapter(dropDownAdapter)
-        binding.player2Input.setAdapter(dropDownAdapter)
+        val players = eventViewModel.getPlayers().value
+        val playerNames = players?.map { it.name }
+        if (!playerNames.isNullOrEmpty()){
+        val dropDownAdapter = ArrayAdapter(requireContext(),R.layout.dropdown_item, playerNames)
+            binding.player1Input.setAdapter(dropDownAdapter)
+            binding.player2Input.setAdapter(dropDownAdapter)}
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

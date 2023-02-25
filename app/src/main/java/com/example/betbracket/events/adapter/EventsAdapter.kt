@@ -12,7 +12,7 @@ import com.example.betbracket.events.EventViewModel
 class EventsAdapter(
     private val eventViewModel: EventViewModel,
     private val onClickDelete: (Int) -> Unit,
-    private val onClickSelect: (Int) -> Unit,
+    private val onClickSelect: (Int) -> Unit
 ) : RecyclerView.Adapter<EventsViewHolder>() {
 
 

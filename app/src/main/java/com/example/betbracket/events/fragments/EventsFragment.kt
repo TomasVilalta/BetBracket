@@ -5,18 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.R
 import com.example.betbracket.database.BetDatabase
+import com.example.betbracket.database.entities.Player
 import com.example.betbracket.databinding.FragmentEventsBinding
 import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.EventViewModelProviderFactory
 import com.example.betbracket.events.EventsRepository
 import com.example.betbracket.events.adapter.EventsAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 
 class EventsFragment : MainScreenAbstractFragment() {
@@ -37,6 +40,10 @@ class EventsFragment : MainScreenAbstractFragment() {
         eventViewModel =
             ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
 
+        binding.lineView.setOnClickListener {
+            lifecycleScope.launch{
+            eventViewModel.onCreateEvent("ola", "Juan", "Pepe")}
+        }
         initRecyclerView()
 
         eventViewModel.getEvents().observe(viewLifecycleOwner) { newEventList ->
@@ -56,7 +63,7 @@ class EventsFragment : MainScreenAbstractFragment() {
         adapter = EventsAdapter(
             eventViewModel,
             { event -> eventClickDelete(event) },
-            { event -> eventClickSelect(event) }
+            { event -> eventClickSelect(event) },
         )
         binding.eventList.layoutManager = LinearLayoutManager(activity)
         binding.eventList.adapter = adapter

@@ -12,9 +12,10 @@ class EventsRepository(val db: BetDatabase) {
 
     suspend fun updateEvent(event: Event) = db.betDao.updateEvent(event)
 
-    fun getPlayerByName(playerName: String) = db.betDao.getPlayerByName(playerName)
+    suspend fun getPlayerByName(playerName: String) = db.betDao.getPlayerByName(playerName)
 
     fun getEvents() = db.betDao.getAllEvents()
+    fun getPlayers() = db.betDao.getAllPlayers()
 
 
 }

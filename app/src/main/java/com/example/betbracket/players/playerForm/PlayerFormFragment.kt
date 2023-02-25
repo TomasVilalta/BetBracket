@@ -11,12 +11,18 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
+import com.example.betbracket.database.BetDatabase
+import com.example.betbracket.database.entities.Player
 import com.example.betbracket.databinding.FragmentPlayerFormBinding
 import com.example.betbracket.players.PlayerViewModel
+import com.example.betbracket.players.PlayerViewModelProviderFactory
+import com.example.betbracket.players.PlayersRepository
+import kotlinx.coroutines.launch
 
 
 class PlayerFormFragment : SecondaryScreenAbstractFragment() {
@@ -24,24 +30,30 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
     private var _binding: FragmentPlayerFormBinding? = null
     private val binding get() = _binding!!
     private lateinit var args: PlayerFormFragmentArgs
-    private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment() })
+    private val playerViewModel: PlayerViewModel by viewModels({ requireParentFragment() }){PlayerViewModelProviderFactory(
+        PlayersRepository(BetDatabase.getInstance(requireContext()))
+    )}
+    private var newPlayer: Player? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlayerFormBinding.inflate(inflater, container, false)
 
-        playerViewModel.playerImage.observe(viewLifecycleOwner) { newImage ->
+        playerViewModel.currentPlayerImage.observe(viewLifecycleOwner) { newImage ->
             Log.i("AVATAR", "OBSERVED")
             Glide.with(this).load(newImage).into(binding.playerImage)
         }
 
         // Default playerPos is -1, which means the user is creating a new player
         args = PlayerFormFragmentArgs.fromBundle(requireArguments())
-        Log.i("ARGS", "${args.playerPos}")
+        Log.i("ARGS", "${args.playerName}")
 
-        if (args.playerPos != -1) {
-            fillPlayerFields()
+        if (args.playerName != null) {
+            lifecycleScope.launch {
+                newPlayer = playerViewModel.getPlayerByName(args.playerName!!)
+                fillPlayerFields(newPlayer!!)
+            }
         } else {
             playerViewModel.setCurrentPlayerImage("default")
         }
@@ -56,12 +68,10 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
         return binding.root
     }
 
-    private fun fillPlayerFields() {
-        binding.playerNameInput.setText(playerViewModel.getPlayerName(args.playerPos))
-        binding.playerBalanceInput.setText(
-            playerViewModel.getPlayerBalance(args.playerPos).toString()
-        )
-        playerViewModel.setCurrentPlayerImage(playerViewModel.getPlayerImage(args.playerPos))
+    private fun fillPlayerFields(player: Player) {
+        binding.playerNameInput.setText(player.name)
+        binding.playerBalanceInput.setText(player.balance.toString())
+        playerViewModel.setCurrentPlayerImage(player.image)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,15 +86,24 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
                     if (!binding.playerNameInput.text.isNullOrBlank() && !binding.playerBalanceInput.text.isNullOrBlank()) {
                         val playerName = binding.playerNameInput.text.toString()
                         val playerBalance = binding.playerBalanceInput.text.toString().toDouble()
-                        if (args.playerPos == -1) {
-                            playerViewModel.onCreatePlayer(playerName, playerBalance)
+                        if (newPlayer == null) {
+                             playerViewModel.currentPlayerImage.value?.let {
+                                 val newPlayer = Player(playerName, playerBalance, it)
+                                playerViewModel.onCreatePlayer(newPlayer)
+                            }
+
                             Toast.makeText(
                                 requireContext(),
                                 "Jugador creado",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            playerViewModel.onEditPlayer(args.playerPos, playerName, playerBalance)
+                            newPlayer!!.let {
+                                it.name = playerName
+                                it.balance = playerBalance
+                                it.image = playerViewModel.currentPlayerImage.value!!
+                                playerViewModel.onEditPlayer(it)
+                            }
                             Toast.makeText(
                                 requireContext(),
                                 "Jugador actualizado",
