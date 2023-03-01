@@ -11,30 +11,39 @@ import com.example.betbracket.database.entities.Player
 import com.example.betbracket.players.PlayerProvider
 import kotlinx.coroutines.launch
 
-class EventViewModel(val eventsRepository: EventsRepository) : ViewModel() {
+class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel() {
 
+//    private var _eventsList : MutableList<Event>? = (eventsRepository.getEvents().value as MutableList<Event>?)
+//
+//    private var _playerList : MutableList<Player>? = (eventsRepository.getPlayers().value as MutableList<Player>?)
 
-    private var _player = MutableLiveData<Player>()
-    val player:LiveData<Player> get() =  _player
+    private var _eventsAndPlayersList = MutableLiveData<MutableList<Triple<Event,Player,Player>>>()
+    val playerList: LiveData<MutableList<Triple<Event,Player,Player>>> get() = _eventsAndPlayersList
 
-    fun onCreateEvent(title: String, player1: String, player2: String) = viewModelScope.launch {
-            val newEvent = Event(title, player1, player2)
-            eventsRepository.insertEvent(newEvent)
+    init {
+//        _eventsAndPlayersList.value = _eventsList.map {it.player1Name == }
     }
 
-    fun getEvents() = eventsRepository.getEvents()
+    fun onCreateEvent(title: String, player1: String, player2: String) = viewModelScope.launch {
+        val newEvent = Event(title, player1, player2)
+        eventsRepository.insertEvent(newEvent)
+    }
 
 
-
+    fun getEventsWithPlayers() = eventsRepository.getEventsWithPlayers()
     fun getPlayers() = eventsRepository.getPlayers()
-    fun onDeleteEvent(event: Event)= viewModelScope.launch {
+
+    fun onDeleteEvent(event: Event) = viewModelScope.launch {
         eventsRepository.deleteEvent(event)
     }
 
-    fun getPlayerByName(playerName: String) = viewModelScope.launch{
-        Log.i("diomio","getPlayerByName called")
-        _player.value = eventsRepository.getPlayerByName(playerName)
-    }
+//    fun getPlayerByName(playerName: String) = viewModelScope.launch {
+//        Log.i("diomio", "getPlayerByName called")
+//        _player.value = eventsRepository.getPlayerByName(playerName)
+//        Log.i("diomio", _player.value.toString())
+//    }
+
+
 
 
 }

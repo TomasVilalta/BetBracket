@@ -7,22 +7,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betbracket.R
 import com.example.betbracket.database.entities.Event
-import com.example.betbracket.events.EventViewModel
+import com.example.betbracket.database.relations.EventWithPlayers
 
 class EventsAdapter(
-    private val eventViewModel: EventViewModel,
     private val onClickDelete: (Int) -> Unit,
-    private val onClickSelect: (Int) -> Unit
+    private val onClickSelect: (Int) -> Unit,
 ) : RecyclerView.Adapter<EventsViewHolder>() {
 
-
-    private val differCallback = object : DiffUtil.ItemCallback<Event>() {
-        override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.title == newItem.title
+    private val differCallback = object : DiffUtil.ItemCallback<EventWithPlayers>() {
+        override fun areItemsTheSame(oldItem: EventWithPlayers, newItem: EventWithPlayers): Boolean {
+            return oldItem.event.title == newItem.event.title
         }
-
-        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: EventWithPlayers, newItem: EventWithPlayers): Boolean {
+            return oldItem.event == newItem.event
         }
     }
 
@@ -38,7 +35,7 @@ class EventsAdapter(
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
         val item = differ.currentList[position]
-        return holder.render(item, onClickDelete, onClickSelect, eventViewModel)
+        return holder.render(item, onClickDelete, onClickSelect)
     }
 
 

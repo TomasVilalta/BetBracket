@@ -5,6 +5,8 @@ import androidx.room.*
 import com.example.betbracket.database.entities.Bet
 import com.example.betbracket.database.entities.Event
 import com.example.betbracket.database.entities.Player
+import com.example.betbracket.database.relations.EventWithPlayers
+import com.example.betbracket.database.relations.PlayerWithBets
 
 @Dao
 interface BetDao {
@@ -40,12 +42,13 @@ interface BetDao {
     @Query("SELECT * FROM events")
     fun getAllEvents(): LiveData<List<Event>>
 
-
-
+    @Query("SELECT * FROM events")
+    fun getEventsWithPlayers(): LiveData<List<EventWithPlayers>>
 
 //    Bets
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBet(bet: Bet)
+
 
 
 

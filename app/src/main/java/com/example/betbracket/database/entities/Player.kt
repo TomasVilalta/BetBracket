@@ -11,3 +11,4 @@ data class Player(
     var image: String,
     var lastWagerResult: Double = 0.0
     )
+

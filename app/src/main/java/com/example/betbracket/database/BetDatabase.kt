@@ -15,7 +15,7 @@ import com.example.betbracket.database.entities.Player
         Event::class,
         Player::class
     ],
-    version = 1
+    version = 2
 )
 abstract class BetDatabase : RoomDatabase(){
 
@@ -31,7 +31,9 @@ abstract class BetDatabase : RoomDatabase(){
                     context.applicationContext,
                     BetDatabase::class.java,
                     "betbracket_db"
-                ).build().also{
+                )
+                    .fallbackToDestructiveMigration()
+                    .build().also{
                     INSTANCE = it
                 }
             }

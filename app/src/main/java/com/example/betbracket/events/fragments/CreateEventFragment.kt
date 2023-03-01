@@ -1,6 +1,7 @@
 package com.example.betbracket.events.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -24,9 +25,12 @@ class CreateEventFragment : SecondaryScreenAbstractFragment() {
 
     private var _binding: FragmentCreateEventBinding? = null
     private val binding get() = _binding!!
-    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() }){EventViewModelProviderFactory(
-        EventsRepository(BetDatabase.getInstance(requireContext()))
-    )}
+    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() }) {
+        EventViewModelProviderFactory(
+            EventsRepository(BetDatabase.getInstance(requireContext()))
+        )
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,14 +45,14 @@ class CreateEventFragment : SecondaryScreenAbstractFragment() {
 
     override fun onResume() {
         super.onResume()
-        val players = eventViewModel.getPlayers().value
-        val playerNames = players?.map { it.name }
-        if (!playerNames.isNullOrEmpty()){
-        val dropDownAdapter = ArrayAdapter(requireContext(),R.layout.dropdown_item, playerNames)
+        eventViewModel.getPlayers().observe(viewLifecycleOwner) {
+            val dropDownAdapter =
+                ArrayAdapter(requireContext(), R.layout.dropdown_item, it.map { list -> list.name })
             binding.player1Input.setAdapter(dropDownAdapter)
-            binding.player2Input.setAdapter(dropDownAdapter)}
-
+            binding.player2Input.setAdapter(dropDownAdapter)
+        }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menuHost: MenuHost = requireActivity()
@@ -72,8 +76,10 @@ class CreateEventFragment : SecondaryScreenAbstractFragment() {
                                 player1Input.text.toString(),
                                 player2Input.text.toString()
                             )
-                            Toast.makeText(requireContext(), "Evento creado", Toast.LENGTH_SHORT).show()
-                            view.findNavController().navigate(CreateEventFragmentDirections.actionCreateEventFragmentToEventsFragment())
+                            Toast.makeText(requireContext(), "Evento creado", Toast.LENGTH_SHORT)
+                                .show()
+                            view.findNavController()
+                                .navigate(CreateEventFragmentDirections.actionCreateEventFragmentToEventsFragment())
 
                         }
                     }

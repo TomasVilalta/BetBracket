@@ -16,6 +16,7 @@ class EventsRepository(val db: BetDatabase) {
 
     fun getEvents() = db.betDao.getAllEvents()
     fun getPlayers() = db.betDao.getAllPlayers()
+    fun getEventsWithPlayers() = db.betDao.getEventsWithPlayers()
 
 
 }

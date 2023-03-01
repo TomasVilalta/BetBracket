@@ -1,6 +1,7 @@
 package com.example.betbracket.events.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.R
+import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.database.BetDatabase
 import com.example.betbracket.database.entities.Player
 import com.example.betbracket.databinding.FragmentEventsBinding
@@ -28,7 +29,7 @@ class EventsFragment : MainScreenAbstractFragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: EventsAdapter
     private lateinit var eventViewModel: EventViewModel
-
+    private var playerPair : Pair<String, String> = Pair("","")
 //    private var eventsList = EventProvider.getEvents()
 
     override fun onCreateView(
@@ -41,14 +42,18 @@ class EventsFragment : MainScreenAbstractFragment() {
             ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
 
         binding.lineView.setOnClickListener {
-            lifecycleScope.launch{
-            eventViewModel.onCreateEvent("ola", "Juan", "Pepe")}
+            lifecycleScope.launch {
+                eventViewModel.onCreateEvent("ola", "Juan", "Pepe")
+            }
         }
         initRecyclerView()
 
-        eventViewModel.getEvents().observe(viewLifecycleOwner) { newEventList ->
+
+        eventViewModel.getEventsWithPlayers().observe(viewLifecycleOwner) { newEventList ->
             adapter.differ.submitList(newEventList)
         }
+
+
 
         binding.addFab.setOnClickListener {
             it.findNavController()
@@ -61,7 +66,6 @@ class EventsFragment : MainScreenAbstractFragment() {
 
     private fun initRecyclerView() {
         adapter = EventsAdapter(
-            eventViewModel,
             { event -> eventClickDelete(event) },
             { event -> eventClickSelect(event) },
         )
@@ -76,7 +80,7 @@ class EventsFragment : MainScreenAbstractFragment() {
     }
 
     private fun eventClickDelete(eventPos: Int) {
-        val event = adapter.differ.currentList[eventPos]
+        val event = adapter.differ.currentList[eventPos].event
         MaterialAlertDialogBuilder(
             this.requireContext(),
             R.style.AlertDialog_BetBracket
