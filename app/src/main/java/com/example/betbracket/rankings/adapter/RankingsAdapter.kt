@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betbracket.R
-import com.example.betbracket.database.models.Player
+import com.example.betbracket.database.entities.Player
 
 class RankingsAdapter(var rankingsList: List<Player>) : RecyclerView.Adapter<RankingsViewHolder>() {
     override fun getItemCount(): Int = rankingsList.size

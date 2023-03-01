@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.databinding.ViewRankingBinding
-import com.example.betbracket.database.models.Player
+import com.example.betbracket.database.entities.Player
 
 class RankingsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

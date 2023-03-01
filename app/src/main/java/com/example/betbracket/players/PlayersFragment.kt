@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.R
+import com.example.betbracket.database.BetDatabase
+import com.example.betbracket.database.entities.Player
 import com.example.betbracket.databinding.FragmentPlayersBinding
 import com.example.betbracket.players.adapter.PlayerAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -30,7 +32,29 @@ class PlayersFragment : MainScreenAbstractFragment() {
     ): View? {
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
         Log.i("VIEWMODEL", "ASSIGNED TO PLAYER FRAG")
-        playerViewModel = ViewModelProvider(this)[PlayerViewModel::class.java]
+        val playersRepository = PlayersRepository(BetDatabase.getInstance(requireContext()))
+        val viewModelProviderFactory = PlayerViewModelProviderFactory(playersRepository)
+        playerViewModel =
+            ViewModelProvider(this, viewModelProviderFactory)[PlayerViewModel::class.java]
+        Log.i("diomio", "playerViewmodel created")
+        playerViewModel.onCreatePlayer(
+            Player(
+                "Juan",
+                100.0,
+                "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+                -14.5
+            )
+        )
+
+        playerViewModel.onCreatePlayer(
+            Player(
+                "Pepe",
+                74.0,
+                "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+                21.7
+            )
+        )
+
         initRecyclerView()
 
         // Observers
@@ -43,16 +67,14 @@ class PlayersFragment : MainScreenAbstractFragment() {
             }
         }
 
-        playerViewModel.playerList.observe(viewLifecycleOwner) { playerList ->
-            Log.i("VIEWMODEL", "playerList Observed! -> $playerList")
-            adapter.playerList = playerList
-            adapter.notifyDataSetChanged()
-
+        playerViewModel.getPlayers().observe(viewLifecycleOwner) { playerList ->
+            adapter.differ.submitList(playerList)
         }
 
         //  Click listeners
         binding.addFab.setOnClickListener { view: View ->
-            view.findNavController().navigate(PlayersFragmentDirections.actionPlayersFragmentToPlayerFormFragment())
+            view.findNavController()
+                .navigate(PlayersFragmentDirections.actionPlayersFragmentToPlayerFormFragment(null))
         }
 
         return binding.root
@@ -61,27 +83,28 @@ class PlayersFragment : MainScreenAbstractFragment() {
 
     private fun initRecyclerView() {
         adapter =
-            PlayerAdapter(playerViewModel.getPlayers(), { playerPos -> onDeleteItem(playerPos) },{playerPos -> onEditItem(playerPos)})
+            PlayerAdapter({ playerPos -> onDeleteItem(playerPos) },
+                { playerPos -> onEditItem(playerPos) })
         binding.playerList.layoutManager = LinearLayoutManager(activity)
         binding.playerList.adapter = adapter
 
     }
 
     private fun onEditItem(playerPos: Int) {
-        this.findNavController().navigate(PlayersFragmentDirections.actionPlayersFragmentToPlayerFormFragment(playerPos))
+        val playerName = adapter.differ.currentList[playerPos].name
+        this.findNavController()
+            .navigate(PlayersFragmentDirections.actionPlayersFragmentToPlayerFormFragment(playerName))
     }
 
     private fun onDeleteItem(playerPos: Int) {
+        val player = adapter.differ.currentList[playerPos]
         MaterialAlertDialogBuilder(
             this.requireContext(),
             R.style.AlertDialog_BetBracket
         )
-            .setMessage("¿Quieres eliminar a ${playerViewModel.getPlayerName(playerPos)}?")
+            .setMessage("¿Quieres eliminar a ${player.name}?")
             .setPositiveButton("Si") { _, _ ->
-                Log.i("onDelete", "playerPos before onDelete: $playerPos")
-                playerViewModel.onDelete(playerPos)
-                adapter.notifyItemRemoved(playerPos)
-
+                playerViewModel.onDelete(player)
             }
             .setNegativeButton("No") { _, _ ->
             }.show()
