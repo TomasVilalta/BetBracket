@@ -51,6 +51,7 @@ class CreateEventFragment : SecondaryScreenAbstractFragment() {
             binding.player1Input.setAdapter(dropDownAdapter)
             binding.player2Input.setAdapter(dropDownAdapter)
         }
+
     }
 
 

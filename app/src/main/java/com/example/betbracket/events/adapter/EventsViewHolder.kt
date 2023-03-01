@@ -14,7 +14,7 @@ class EventsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun render(
         item: EventWithPlayers,
         onClickDelete: (Int) -> Unit,
-        onClickSelect: (Int) -> Unit,
+        onClickSelect: (String) -> Unit,
     ) {
         binding.eventTitleText.text = item.event.title
         binding.player1Name.text = item.event.player1Name
@@ -25,7 +25,7 @@ class EventsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             onClickDelete(adapterPosition)
         }
         binding.eventCard.setOnClickListener {
-            onClickSelect((adapterPosition))
+            onClickSelect((item.event.title))
         }
 
     }

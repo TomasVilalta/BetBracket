@@ -8,21 +8,21 @@ import androidx.lifecycle.viewModelScope
 import com.example.betbracket.database.entities.Event
 import com.example.betbracket.events.providers.EventProvider
 import com.example.betbracket.database.entities.Player
+import com.example.betbracket.database.relations.EventWithPlayers
 import com.example.betbracket.players.PlayerProvider
 import kotlinx.coroutines.launch
 
 class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel() {
 
-//    private var _eventsList : MutableList<Event>? = (eventsRepository.getEvents().value as MutableList<Event>?)
-//
-//    private var _playerList : MutableList<Player>? = (eventsRepository.getPlayers().value as MutableList<Player>?)
 
-    private var _eventsAndPlayersList = MutableLiveData<MutableList<Triple<Event,Player,Player>>>()
-    val playerList: LiveData<MutableList<Triple<Event,Player,Player>>> get() = _eventsAndPlayersList
+    private var _currentEvent = MutableLiveData<EventWithPlayers>()
+    val currentEvent: LiveData<EventWithPlayers> get() = _currentEvent
 
-    init {
-//        _eventsAndPlayersList.value = _eventsList.map {it.player1Name == }
-    }
+    private var _eventsAndPlayersList =
+        MutableLiveData<MutableList<Triple<Event, Player, Player>>>()
+    val playerList: LiveData<MutableList<Triple<Event, Player, Player>>> get() = _eventsAndPlayersList
+
+
 
     fun onCreateEvent(title: String, player1: String, player2: String) = viewModelScope.launch {
         val newEvent = Event(title, player1, player2)
@@ -37,13 +37,16 @@ class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel
         eventsRepository.deleteEvent(event)
     }
 
+    fun getEventWithPlayersByTitle(eventTitle: String) = viewModelScope.launch {
+        _currentEvent.value = eventsRepository.getEventWithPlayersByTitle(eventTitle)
+
+    }
+
 //    fun getPlayerByName(playerName: String) = viewModelScope.launch {
 //        Log.i("diomio", "getPlayerByName called")
 //        _player.value = eventsRepository.getPlayerByName(playerName)
 //        Log.i("diomio", _player.value.toString())
 //    }
-
-
 
 
 }

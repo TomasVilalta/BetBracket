@@ -68,7 +68,7 @@
         android:label=" "
         tools:layout="@layout/fragment_event_detail">
         <argument
-            android:name="eventPos"
-            app:argType="integer" />
+            android:name="eventTitle"
+            app:argType="string" />
     </fragment>
 </navigation>

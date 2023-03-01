@@ -11,7 +11,7 @@ import com.example.betbracket.database.relations.EventWithPlayers
 
 class EventsAdapter(
     private val onClickDelete: (Int) -> Unit,
-    private val onClickSelect: (Int) -> Unit,
+    private val onClickSelect: (String) -> Unit,
 ) : RecyclerView.Adapter<EventsViewHolder>() {
 
     private val differCallback = object : DiffUtil.ItemCallback<EventWithPlayers>() {

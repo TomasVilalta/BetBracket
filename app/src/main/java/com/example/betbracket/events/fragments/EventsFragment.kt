@@ -67,16 +67,16 @@ class EventsFragment : MainScreenAbstractFragment() {
     private fun initRecyclerView() {
         adapter = EventsAdapter(
             { event -> eventClickDelete(event) },
-            { event -> eventClickSelect(event) },
+            { eventName -> eventClickSelect(eventName) },
         )
         binding.eventList.layoutManager = LinearLayoutManager(activity)
         binding.eventList.adapter = adapter
     }
 
 
-    private fun eventClickSelect(eventPos: Int) {
+    private fun eventClickSelect(eventName: String) {
         this.findNavController()
-            .navigate(EventsFragmentDirections.actionEventsFragmentToEventDetailFragment(eventPos))
+            .navigate(EventsFragmentDirections.actionEventsFragmentToEventDetailFragment(eventName))
     }
 
     private fun eventClickDelete(eventPos: Int) {

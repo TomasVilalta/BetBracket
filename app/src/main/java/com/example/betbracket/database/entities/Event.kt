@@ -2,7 +2,7 @@ package com.example.betbracket.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
+import androidx.versionedparcelable.VersionedParcelize
 
 @Entity(tableName = "events")
 data class Event(

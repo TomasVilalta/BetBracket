@@ -2,7 +2,7 @@ package com.example.betbracket.events
 
 import com.example.betbracket.database.BetDatabase
 import com.example.betbracket.database.entities.Event
-import com.example.betbracket.database.entities.Player
+import com.example.betbracket.database.relations.EventWithPlayers
 
 class EventsRepository(val db: BetDatabase) {
 
@@ -17,6 +17,7 @@ class EventsRepository(val db: BetDatabase) {
     fun getEvents() = db.betDao.getAllEvents()
     fun getPlayers() = db.betDao.getAllPlayers()
     fun getEventsWithPlayers() = db.betDao.getEventsWithPlayers()
+    suspend fun getEventWithPlayersByTitle(eventTitle: String): EventWithPlayers = db.betDao.getEventWithPlayersByTitle(eventTitle)
 
 
 }

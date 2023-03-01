@@ -6,7 +6,6 @@ import com.example.betbracket.database.entities.Bet
 import com.example.betbracket.database.entities.Event
 import com.example.betbracket.database.entities.Player
 import com.example.betbracket.database.relations.EventWithPlayers
-import com.example.betbracket.database.relations.PlayerWithBets
 
 @Dao
 interface BetDao {
@@ -39,19 +38,19 @@ interface BetDao {
     @Delete
     suspend fun deleteEvent(event: Event)
 
+
     @Query("SELECT * FROM events")
     fun getAllEvents(): LiveData<List<Event>>
 
+    @Transaction
+    @Query("SELECT * FROM events WHERE title = :eventTitle")
+    suspend fun getEventWithPlayersByTitle(eventTitle: String): EventWithPlayers
     @Query("SELECT * FROM events")
     fun getEventsWithPlayers(): LiveData<List<EventWithPlayers>>
 
 //    Bets
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBet(bet: Bet)
-
-
-
-
 
 
 
