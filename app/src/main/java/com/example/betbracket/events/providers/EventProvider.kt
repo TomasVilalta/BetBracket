@@ -1,8 +1,5 @@
 package com.example.betbracket.events.providers
 
-import com.example.betbracket.database.entities.Event
-import com.example.betbracket.database.entities.Player
-
 
 class EventProvider {
 //    companion object {

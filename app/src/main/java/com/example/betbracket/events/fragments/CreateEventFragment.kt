@@ -1,11 +1,9 @@
 package com.example.betbracket.events.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -18,7 +16,6 @@ import com.example.betbracket.databinding.FragmentCreateEventBinding
 import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.EventViewModelProviderFactory
 import com.example.betbracket.events.EventsRepository
-import com.example.betbracket.players.PlayersRepository
 
 
 class CreateEventFragment : SecondaryScreenAbstractFragment() {

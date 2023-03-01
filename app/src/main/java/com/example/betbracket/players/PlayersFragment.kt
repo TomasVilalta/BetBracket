@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.R
+import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.database.BetDatabase
 import com.example.betbracket.database.entities.Player
 import com.example.betbracket.databinding.FragmentPlayersBinding

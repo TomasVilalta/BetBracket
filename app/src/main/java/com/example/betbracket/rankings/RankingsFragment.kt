@@ -8,8 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.database.BetDatabase
-import com.example.betbracket.databinding.FragmentRankingsBinding
 import com.example.betbracket.database.entities.Player
+import com.example.betbracket.databinding.FragmentRankingsBinding
 import com.example.betbracket.players.PlayersRepository
 import com.example.betbracket.rankings.adapter.RankingsAdapter
 

@@ -1,10 +1,8 @@
 package com.example.betbracket.events.adapter
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.betbracket.database.entities.Event
 import com.example.betbracket.database.relations.EventWithPlayers
 import com.example.betbracket.databinding.ViewEventBinding
 

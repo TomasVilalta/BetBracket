@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betbracket.R
-import com.example.betbracket.database.entities.Event
 import com.example.betbracket.database.relations.EventWithPlayers
 
 class EventsAdapter(

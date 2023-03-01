@@ -1,15 +1,12 @@
 package com.example.betbracket.events
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.betbracket.database.entities.Event
-import com.example.betbracket.events.providers.EventProvider
 import com.example.betbracket.database.entities.Player
 import com.example.betbracket.database.relations.EventWithPlayers
-import com.example.betbracket.players.PlayerProvider
 import kotlinx.coroutines.launch
 
 class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel() {

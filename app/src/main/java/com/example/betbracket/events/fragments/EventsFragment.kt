@@ -1,7 +1,6 @@
 package com.example.betbracket.events.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.MainScreenAbstractFragment
 import com.example.betbracket.database.BetDatabase
-import com.example.betbracket.database.entities.Player
 import com.example.betbracket.databinding.FragmentEventsBinding
 import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.EventViewModelProviderFactory
