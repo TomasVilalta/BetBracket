@@ -37,38 +37,23 @@ class PlayersFragment : MainScreenAbstractFragment() {
         playerViewModel =
             ViewModelProvider(this, viewModelProviderFactory)[PlayerViewModel::class.java]
         Log.i("diomio", "playerViewmodel created")
-        playerViewModel.onCreatePlayer(
-            Player(
-                "Juan",
-                100.0,
-                "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-                -14.5
-            )
-        )
-
-        playerViewModel.onCreatePlayer(
-            Player(
-                "Pepe",
-                74.0,
-                "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-                21.7
-            )
-        )
 
         initRecyclerView()
 
         // Observers
         playerViewModel.playerCount.observe(viewLifecycleOwner) { newPlayerCount ->
-            binding.playerCountText.text = getString(R.string.jugadoresCount, newPlayerCount)
-            if (newPlayerCount == 0) {
-                showEmptyListUI()
-            } else {
-                hideEmptyListUI()
-            }
+
+
         }
 
         playerViewModel.getPlayers().observe(viewLifecycleOwner) { playerList ->
             adapter.differ.submitList(playerList)
+            if (playerList.isNullOrEmpty()) {
+                showEmptyListUI()
+            } else {
+                binding.playerCountText.text = getString(R.string.jugadoresCount, playerList.size)
+                hideEmptyListUI()
+            }
         }
 
         //  Click listeners
@@ -102,7 +87,8 @@ class PlayersFragment : MainScreenAbstractFragment() {
             this.requireContext(),
             R.style.AlertDialog_BetBracket
         )
-            .setMessage("¿Quieres eliminar a ${player.name}?")
+            .setTitle("¿Desea eliminar a ${player.name}?")
+            .setMessage("También se eliminarán los eventos asociados a este jugador")
             .setPositiveButton("Si") { _, _ ->
                 playerViewModel.onDelete(player)
             }

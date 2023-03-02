@@ -83,7 +83,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         binding.player2OddsText.text = roundOff(event.event.player2Return)
         binding.eventBetForm.player1Radio.text = event.event.player1Name
         binding.eventBetForm.player2Radio.text = event.event.player2Name
-    }   
+    }
     private fun roundOff(num: Double):String = (Math.round(num * 100.0) / 100.0).toString()
 
 

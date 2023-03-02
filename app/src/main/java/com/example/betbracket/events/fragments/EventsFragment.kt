@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +18,6 @@ import com.example.betbracket.events.EventViewModelProviderFactory
 import com.example.betbracket.events.EventsRepository
 import com.example.betbracket.events.adapter.EventsAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.launch
 
 
 class EventsFragment : MainScreenAbstractFragment() {
@@ -27,9 +26,6 @@ class EventsFragment : MainScreenAbstractFragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: EventsAdapter
     private lateinit var eventViewModel: EventViewModel
-    private var playerPair : Pair<String, String> = Pair("","")
-//    private var eventsList = EventProvider.getEvents()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -42,6 +38,12 @@ class EventsFragment : MainScreenAbstractFragment() {
         initRecyclerView()
         eventViewModel.getEventsWithPlayers().observe(viewLifecycleOwner) { newEventList ->
             adapter.differ.submitList(newEventList)
+            if (newEventList.isNullOrEmpty()){
+                showEmptyUI()
+            }else{
+                binding.eventCountText.text = getString(R.string.eventosCount, newEventList.size)
+                hideEmptyUI()
+            }
         }
 
 
@@ -53,6 +55,18 @@ class EventsFragment : MainScreenAbstractFragment() {
 
 
         return binding.root
+    }
+
+    private fun hideEmptyUI() {
+        binding.eventCountText.visibility = View.VISIBLE
+        binding.lineView.visibility = View.VISIBLE
+        //TODO -> Make empty screen layout GONE
+    }
+
+    private fun showEmptyUI() {
+        binding.eventCountText.visibility = View.GONE
+        binding.lineView.visibility = View.GONE
+        //TODO -> Make empty screen layout Visible
     }
 
     private fun initRecyclerView() {
@@ -73,14 +87,10 @@ class EventsFragment : MainScreenAbstractFragment() {
     private fun eventClickDelete(eventPos: Int) {
         val event = adapter.differ.currentList[eventPos].event
         MaterialAlertDialogBuilder(
-            this.requireContext(),
-            R.style.AlertDialog_BetBracket
-        )
-            .setMessage("¿Quieres eliminar ${event.title}?")
-            .setPositiveButton("Si") { _, _ ->
+            this.requireContext(), R.style.AlertDialog_BetBracket
+        ).setMessage("¿Quieres eliminar ${event.title}?").setPositiveButton("Si") { _, _ ->
                 eventViewModel.onDeleteEvent(event)
-            }
-            .setNegativeButton("No") { _, _ ->
+            }.setNegativeButton("No") { _, _ ->
             }.show()
 
     }

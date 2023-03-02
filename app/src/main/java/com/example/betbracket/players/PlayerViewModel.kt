@@ -9,7 +9,7 @@ import com.example.betbracket.database.entities.Player
 import com.example.betbracket.players.playerForm.AvatarProvider
 import kotlinx.coroutines.launch
 
-class PlayerViewModel(val playersRepository: PlayersRepository) : ViewModel() {
+class PlayerViewModel(private val playersRepository: PlayersRepository) : ViewModel() {
 
     private val _playerCount = MutableLiveData<Int>()
     val playerCount: LiveData<Int> get() = _playerCount

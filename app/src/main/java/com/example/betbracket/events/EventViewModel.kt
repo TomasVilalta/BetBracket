@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel() {
 
 
+
     private var _currentEvent = MutableLiveData<EventWithPlayers>()
     val currentEvent: LiveData<EventWithPlayers> get() = _currentEvent
 
