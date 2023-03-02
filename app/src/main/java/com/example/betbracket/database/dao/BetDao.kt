@@ -38,6 +38,9 @@ interface BetDao {
     @Delete
     suspend fun deleteEvent(event: Event)
 
+    @Query ("Delete from events")
+    fun deleteEvents()
+
 
     @Query("SELECT * FROM events")
     fun getAllEvents(): LiveData<List<Event>>
@@ -45,6 +48,7 @@ interface BetDao {
     @Transaction
     @Query("SELECT * FROM events WHERE title = :eventTitle")
     suspend fun getEventWithPlayersByTitle(eventTitle: String): EventWithPlayers
+
     @Query("SELECT * FROM events")
     fun getEventsWithPlayers(): LiveData<List<EventWithPlayers>>
 

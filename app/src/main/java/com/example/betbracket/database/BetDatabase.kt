@@ -15,7 +15,7 @@ import com.example.betbracket.database.entities.Player
         Event::class,
         Player::class
     ],
-    version = 2
+    version = 3
 )
 abstract class BetDatabase : RoomDatabase(){
 

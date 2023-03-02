@@ -10,9 +10,7 @@ class EventsRepository(val db: BetDatabase) {
 
     suspend fun deleteEvent(event: Event) = db.betDao.deleteEvent(event)
 
-    suspend fun updateEvent(event: Event) = db.betDao.updateEvent(event)
-
-    suspend fun getPlayerByName(playerName: String) = db.betDao.getPlayerByName(playerName)
+    fun deleteEvents() = db.betDao.deleteEvents()
 
     fun getEvents() = db.betDao.getAllEvents()
     fun getPlayers() = db.betDao.getAllPlayers()

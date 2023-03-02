@@ -39,14 +39,7 @@ class EventsFragment : MainScreenAbstractFragment() {
         eventViewModel =
             ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
 
-        binding.lineView.setOnClickListener {
-            lifecycleScope.launch {
-                eventViewModel.onCreateEvent("ola", "Juan", "Pepe")
-            }
-        }
         initRecyclerView()
-
-
         eventViewModel.getEventsWithPlayers().observe(viewLifecycleOwner) { newEventList ->
             adapter.differ.submitList(newEventList)
         }

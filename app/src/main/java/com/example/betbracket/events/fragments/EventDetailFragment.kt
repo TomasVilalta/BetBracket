@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
 import com.example.betbracket.database.BetDatabase
+import com.example.betbracket.database.entities.Player
 import com.example.betbracket.database.relations.EventWithPlayers
 import com.example.betbracket.databinding.FragmentEventDetailBinding
 import com.example.betbracket.events.EventViewModel
@@ -53,6 +56,22 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        eventViewModel.getPlayers().observe(viewLifecycleOwner) {playerList ->
+            val dropDownAdapter =
+                ArrayAdapter(requireContext(), R.layout.dropdown_item, playerList.map { list -> list.name })
+            binding.eventBetForm.bettingPlayerInput.setAdapter(dropDownAdapter)
+
+            binding.eventBetForm.bettingPlayerInput.setOnItemClickListener { adapterView, view, i, l ->
+                val selectedPlayer: Player? = playerList.find { it.name == binding.eventBetForm.bettingPlayerInput.text.toString() }
+                if (selectedPlayer != null) {
+                    binding.eventBetForm.bettingPlayerBalanceTxt.text = roundOff(selectedPlayer.balance)
+                }
+            }
+        }
+
+    }
     private fun paintViews(event: EventWithPlayers) {
         binding.eventTitle.text = event.event.title
         binding.eventStateText.text = event.event.status
@@ -62,7 +81,9 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         binding.player2NameText.text = event.player2.name
         binding.player1OddsText.text = roundOff(event.event.player1Return)
         binding.player2OddsText.text = roundOff(event.event.player2Return)
-    }
+        binding.eventBetForm.player1Radio.text = event.event.player1Name
+        binding.eventBetForm.player2Radio.text = event.event.player2Name
+    }   
     private fun roundOff(num: Double):String = (Math.round(num * 100.0) / 100.0).toString()
 
 
