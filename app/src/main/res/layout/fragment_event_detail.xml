@@ -125,10 +125,12 @@
         android:elevation="1dp"
         android:orientation="horizontal"
         android:padding="4dp"
+        app:layout_constraintVertical_bias="1"
         app:layout_constraintBottom_toBottomOf="@+id/player_1_image"
         app:layout_constraintEnd_toStartOf="@+id/player2_odds_layout"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/player_1_image">
+        app:layout_constraintStart_toEndOf="@+id/player_1_image"
+        app:layout_constraintTop_toTopOf="@+id/player_1_image">
 
         <TextView
             android:id="@+id/player1_odds_text"
@@ -146,16 +148,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-
         android:background="@drawable/rounded_rectangle_right"
         android:backgroundTint="@color/background"
         android:elevation="1dp"
+        app:layout_constraintVertical_bias="1"
         android:orientation="horizontal"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/player_2_image"
         app:layout_constraintEnd_toStartOf="@+id/player_2_image"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/player1_odds_layout">
+        app:layout_constraintStart_toEndOf="@+id/player1_odds_layout"
+        app:layout_constraintTop_toTopOf="@+id/player_2_image">
 
         <TextView
             android:id="@+id/player2_odds_text"
@@ -181,7 +184,8 @@
         >
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_height="wrap_content"
             android:text="Declarar ganador"/>

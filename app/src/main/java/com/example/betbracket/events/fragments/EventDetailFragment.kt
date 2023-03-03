@@ -1,11 +1,15 @@
 package com.example.betbracket.events.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
@@ -18,6 +22,7 @@ import com.example.betbracket.databinding.FragmentEventDetailBinding
 import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.EventViewModelProviderFactory
 import com.example.betbracket.events.EventsRepository
+import com.google.android.material.radiobutton.MaterialRadioButton
 
 
 class EventDetailFragment : SecondaryScreenAbstractFragment() {
@@ -37,10 +42,76 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         val args = EventDetailFragmentArgs.fromBundle(requireArguments())
 
         eventViewModel.getEventWithPlayersByTitle(args.eventTitle)
+        eventViewModel.getEventWithBetsByTitle(args.eventTitle)
 
-
-        eventViewModel.currentEvent.observe(viewLifecycleOwner){
+        eventViewModel.currentEventAndPlayers.observe(viewLifecycleOwner) {
             paintViews(it)
+        }
+
+        eventViewModel.currentEventAndBets.observe(viewLifecycleOwner) {
+            //TODO -> populate BetRecyclerView
+            //TODO -> Update returns
+        }
+
+        eventViewModel.returnDifference.observe(viewLifecycleOwner) {
+            val paddingMap = mapOf(
+                0 to 4,
+                1 to 5,
+                2 to 6,
+                3 to 7,
+            ).withDefault { 4 }
+
+            val elevationMap = mapOf(
+                0 to 1,
+                1 to 2,
+                2 to 4,
+                3 to 6,
+            ).withDefault { 1 }
+
+            val colorMap = mapOf(
+                0 to false,
+                1 to true,
+                2 to true,
+                3 to true,
+            ).withDefault { false }
+
+            val padding = paddingMap.getValue(it.second)
+            val elevation = elevationMap.getValue(it.second)
+            val color = colorMap.getValue(it.second)
+
+            val bigLayout = if (!it.first) {
+                binding.player1OddsLayout
+            } else {
+                binding.player2OddsLayout
+            }
+            val smallLayout = if (!it.first) {
+                binding.player2OddsLayout
+            } else {
+                binding.player1OddsLayout
+            }
+            val bigText = if (!it.first) {
+                binding.player1OddsText
+            } else {
+                binding.player2OddsText
+            }
+            val smallText = if (!it.first) {
+                binding.player2OddsText
+            } else {
+                binding.player1OddsText
+            }
+
+            bigLayout.setPadding(padding, padding, padding, padding)
+            bigLayout.elevation = elevation.toFloat()
+            smallLayout.setPadding(4, 4, 4, 4)
+            smallLayout.elevation = 1.0F
+            if (color) {
+                bigText.setTextColor(ContextCompat.getColor(requireContext(), R.color.successColor))
+                smallText.setTextColor(ContextCompat.getColor(requireContext(), R.color.error))
+            } else {
+                bigText.setTextColor(ContextCompat.getColor(requireContext(), R.color.onBackground))
+                smallText.setTextColor(ContextCompat.getColor(requireContext(), R.color.onBackground))
+            }
+
         }
 
 
@@ -48,9 +119,44 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         animateBottomNav()
 
 
+        binding.eventBetForm.betButton.setOnClickListener {
+            var flag: Boolean = false
+            binding.eventBetForm.apply {
+                if (bettingPlayerInput.text.isNullOrBlank()) {
+                    flag = true
+                }
+
+                if (rgWinnerSelect.checkedRadioButtonId == -1) {
+                    flag = true
+                }
+
+                if (amountEditText.text.isNullOrBlank()) {
+                    flag = true
+                }
+
+                if (!flag) {
+                    val checkedPredictionId = rgWinnerSelect.checkedRadioButtonId
+                    val checkedPrediction =
+                        rgWinnerSelect.findViewById<MaterialRadioButton>(checkedPredictionId)
+                    Log.i("PLACE A BET", "Radio button is -> $checkedPredictionId")
+                    eventViewModel.onPlaceBet(
+                        bettingPlayerInput.text.toString(),
+                        amountEditText.text.toString().toDouble(),
+                        checkedPrediction.text.toString()
+                    )
+                    Toast.makeText(requireContext(), "Apuesta guardada", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Completa todos los campos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
         binding.backButton.setOnClickListener {
             it.findNavController().navigateUp()
-
         }
 
         return binding.root
@@ -58,33 +164,49 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
 
     override fun onResume() {
         super.onResume()
-        eventViewModel.getPlayers().observe(viewLifecycleOwner) {playerList ->
+        eventViewModel.getPlayers().observe(viewLifecycleOwner) { playerList ->
             val dropDownAdapter =
-                ArrayAdapter(requireContext(), R.layout.dropdown_item, playerList.map { list -> list.name })
+                ArrayAdapter(
+                    requireContext(),
+                    R.layout.dropdown_item,
+                    playerList.map { list -> list.name })
             binding.eventBetForm.bettingPlayerInput.setAdapter(dropDownAdapter)
 
+            //Paint Betting player balance
             binding.eventBetForm.bettingPlayerInput.setOnItemClickListener { adapterView, view, i, l ->
-                val selectedPlayer: Player? = playerList.find { it.name == binding.eventBetForm.bettingPlayerInput.text.toString() }
+                val selectedPlayer: Player? =
+                    playerList.find { it.name == binding.eventBetForm.bettingPlayerInput.text.toString() }
                 if (selectedPlayer != null) {
-                    binding.eventBetForm.bettingPlayerBalanceTxt.text = roundOff(selectedPlayer.balance)
+                    binding.eventBetForm.bettingPlayerBalanceTxt.text =
+                        getString(R.string.playerBalance, roundOff(selectedPlayer.balance))
                 }
             }
+
         }
 
     }
+
     private fun paintViews(event: EventWithPlayers) {
-        binding.eventTitle.text = event.event.title
-        binding.eventStateText.text = event.event.status
-        Glide.with(requireContext()).load(event.player1.image).into(binding.player1Image)
-        Glide.with(requireContext()).load(event.player2.image).into(binding.player2Image)
-        binding.player1NameText.text = event.player1.name
-        binding.player2NameText.text = event.player2.name
-        binding.player1OddsText.text = roundOff(event.event.player1Return)
-        binding.player2OddsText.text = roundOff(event.event.player2Return)
-        binding.eventBetForm.player1Radio.text = event.event.player1Name
-        binding.eventBetForm.player2Radio.text = event.event.player2Name
+        binding.apply {
+            // Text
+            eventTitle.text = event.event.title
+            eventStateText.text = event.event.status
+            player1NameText.text = event.player1.name
+            player2NameText.text = event.player2.name
+            player1OddsText.text = roundOff(event.event.player1Return)
+            player2OddsText.text = roundOff(event.event.player2Return)
+            eventViewModel.setReturnDifference(event.event.player1Return,event.event.player2Return)
+            eventBetForm.player1Radio.text = event.event.player1Name
+            eventBetForm.player2Radio.text = event.event.player2Name
+            //Player Images
+            Glide.with(requireContext()).load(event.player1.image).into(player1Image)
+            Glide.with(requireContext()).load(event.player2.image).into(player2Image)
+
+        }
+
     }
-    private fun roundOff(num: Double):String = (Math.round(num * 100.0) / 100.0).toString()
+
+    private fun roundOff(num: Double): String = (Math.round(num * 100.0) / 100.0).toString()
 
 
     override fun onDestroy() {
@@ -93,7 +215,4 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
 
     }
 
-    override fun onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment: Boolean) {
-        super.onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
-    }
 }

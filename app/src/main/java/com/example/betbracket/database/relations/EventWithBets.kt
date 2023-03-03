@@ -9,7 +9,7 @@ import com.example.betbracket.database.entities.Event
 data class EventWithBets (
     @Embedded val event: Event,
     @Relation(
-        parentColumn = "eventTitle",
+        parentColumn = "title",
         entityColumn = "betEventTitle"
     )
     val bets : List<Bet>

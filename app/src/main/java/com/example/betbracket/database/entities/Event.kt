@@ -25,7 +25,7 @@ data class Event(
     val title: String,
     val player1Name: String,
     val player2Name: String,
-    val player1Return: Double = 1.0,
-    val player2Return: Double = 1.0,
+    var player1Return: Double = 1.0,
+    var player2Return: Double = 1.0,
     var status: String = "Not started"
 )
