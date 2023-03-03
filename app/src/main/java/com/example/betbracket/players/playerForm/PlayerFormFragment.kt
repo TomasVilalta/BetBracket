@@ -23,6 +23,7 @@ import com.example.betbracket.players.PlayerViewModel
 import com.example.betbracket.players.PlayerViewModelProviderFactory
 import com.example.betbracket.players.PlayersRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class PlayerFormFragment : SecondaryScreenAbstractFragment() {
@@ -85,6 +86,7 @@ class PlayerFormFragment : SecondaryScreenAbstractFragment() {
                 if (menuItem.itemId == R.id.guardar_item) {
                     if (!binding.playerNameInput.text.isNullOrBlank() && !binding.playerBalanceInput.text.isNullOrBlank()) {
                         val playerName = binding.playerNameInput.text.toString()
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                         val playerBalance = binding.playerBalanceInput.text.toString().toDouble()
                         if (newPlayer == null) {
                              playerViewModel.currentPlayerImage.value?.let {

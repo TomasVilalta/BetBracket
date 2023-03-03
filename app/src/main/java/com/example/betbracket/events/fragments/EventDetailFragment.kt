@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
@@ -21,12 +23,14 @@ import com.example.betbracket.databinding.FragmentEventDetailBinding
 import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.EventViewModelProviderFactory
 import com.example.betbracket.events.EventsRepository
+import com.example.betbracket.events.adapter.EventBetsAdapter
 import com.google.android.material.radiobutton.MaterialRadioButton
 
 
 class EventDetailFragment : SecondaryScreenAbstractFragment() {
     private var _binding: FragmentEventDetailBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: EventBetsAdapter
     private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() }) {
         EventViewModelProviderFactory(
             EventsRepository(BetDatabase.getInstance(requireContext()))
@@ -43,13 +47,14 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         eventViewModel.getEventWithPlayersByTitle(args.eventTitle)
         eventViewModel.getEventWithBetsByTitle(args.eventTitle)
 
+        initRecyclerView()
+
         eventViewModel.currentEventAndPlayers.observe(viewLifecycleOwner) {
             paintViews(it)
         }
 
         eventViewModel.currentEventAndBets.observe(viewLifecycleOwner) {
-            //TODO -> populate BetRecyclerView
-            //TODO -> Update returns
+            adapter.differ.submitList(it.bets)
         }
 
         eventViewModel.returnDifference.observe(viewLifecycleOwner) {
@@ -159,6 +164,12 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
         }
 
         return binding.root
+    }
+
+    private fun initRecyclerView() {
+        adapter = EventBetsAdapter()
+        binding.eventBetForm.betsRecyclerView.adapter = adapter
+        binding.eventBetForm.betsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onResume() {
