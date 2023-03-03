@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.betbracket.database.entities.Bet
 import com.example.betbracket.database.entities.Event
+import com.example.betbracket.database.entities.Player
 import com.example.betbracket.database.relations.EventWithBets
 import com.example.betbracket.database.relations.EventWithPlayers
 import kotlinx.coroutines.launch
@@ -23,11 +24,7 @@ class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel
     private var _returnDifference = MutableLiveData<Pair<Boolean, Int>>(Pair(false,0))
     val returnDifference: LiveData<Pair<Boolean, Int>> get() = _returnDifference
 
-
-//    private var _eventsAndPlayersList =
-//        MutableLiveData<MutableList<Triple<Event, Player, Player>>>()
-//    val playerList: LiveData<MutableList<Triple<Event, Player, Player>>> get() = _eventsAndPlayersList
-
+    private var _players = emptyList<Player>()
 
     fun onCreateEvent(title: String, player1: String, player2: String) = viewModelScope.launch {
         val newEvent = Event(title, player1, player2)
@@ -108,6 +105,39 @@ class EventViewModel(private val eventsRepository: EventsRepository) : ViewModel
             if (player1Return > player2Return) Pair(false, grade)
             else Pair(true, grade)
 
+    }
+
+    fun onDeclareWinner(winner: String){
+        Log.i("PLEASE", "players are $_players")
+        viewModelScope.launch {
+        currentEventAndBets.value?.apply {
+            event.status = "Winner is $winner"
+            val winnerReturn = if (winner == event.player1Name) event.player1Return else event.player2Return
+            Log.i("PLEASE", "Bets are -> $bets")
+            bets.forEach { bet ->
+                Log.i("PLEASE", "Computing for -> $bet")
+                val player = _players.find { it.name == bet.betPlayerName }
+                Log.i("PLEASE", "Player is -> $player")
+                if (bet.prediction == winner) {
+                    Log.i("PLEASE", "Player Won")
+                    val winnings = bet.amount*winnerReturn
+                    player?.balance = player?.balance?.plus(winnings)!!
+                    player?.lastWagerResult = winnings
+                }else{
+                    Log.i("PLEASE", "Player Lost")
+                    player?.balance = player?.balance?.minus(bet.amount)!!
+                    player?.lastWagerResult = bet.amount.unaryMinus()
+                }
+                eventsRepository.updatePlayer(player)
+            }
+            eventsRepository.updateEvent(event)
+        }
+
+    }
+    }
+
+    fun setPlayerList(playerList: List<Player>?) {
+        _players = playerList!!
     }
 }
 

@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.example.betbracket.R
 import com.example.betbracket.abstractFragments.SecondaryScreenAbstractFragment
@@ -24,6 +23,7 @@ import com.example.betbracket.events.EventViewModel
 import com.example.betbracket.events.EventViewModelProviderFactory
 import com.example.betbracket.events.EventsRepository
 import com.example.betbracket.events.adapter.EventBetsAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.radiobutton.MaterialRadioButton
 
 
@@ -114,7 +114,12 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
                 smallText.setTextColor(ContextCompat.getColor(requireContext(), R.color.error))
             } else {
                 bigText.setTextColor(ContextCompat.getColor(requireContext(), R.color.onBackground))
-                smallText.setTextColor(ContextCompat.getColor(requireContext(), R.color.onBackground))
+                smallText.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.onBackground
+                    )
+                )
             }
 
         }
@@ -122,6 +127,35 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
 
         (activity as AppCompatActivity).supportActionBar?.hide()
         animateBottomNav()
+
+
+        binding.declareWinnerBtn.setOnClickListener {
+            var selectedPlayerIndex : Int = -1
+
+            eventViewModel.currentEventAndPlayers.value?.apply {
+                val players = arrayOf(event.player1Name,event.player2Name)
+                Log.i("PLEASE","${event.player1Name}")
+                MaterialAlertDialogBuilder(
+                    requireContext(), R.style.AlertDialog_BetBracket
+                )
+                    .setTitle("Declarar ganador")
+                    .setSingleChoiceItems(players,selectedPlayerIndex){dialog, which ->
+                         selectedPlayerIndex = which
+                    }
+                    .setPositiveButton("Si") { _, _ ->
+                        if (selectedPlayerIndex == -1){
+                            Toast.makeText(requireContext(),"Selecciona un ganador",Toast.LENGTH_SHORT).show()
+                        }else{
+                            eventViewModel.onDeclareWinner(players[selectedPlayerIndex])
+                            binding.declareWinnerBtn.isEnabled = false
+
+                        }
+                    }.setNegativeButton("No") { _, _ ->
+                    }.show()
+            }
+        }
+
+
 
 
         binding.eventBetForm.betButton.setOnClickListener {
@@ -138,7 +172,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
                 if (amountEditText.text.isNullOrBlank()) {
                     flag = true
                 }
-                if(amountEditText.text.toString().toDouble() > bettingPlayerBalance){
+                if (amountEditText.text.toString().toDouble() > bettingPlayerBalance) {
                     flag = true
                     amountEditText.error = "Balance insuficiente"
                 }
@@ -187,7 +221,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
                     R.layout.dropdown_item,
                     playerList.map { list -> list.name })
             binding.eventBetForm.bettingPlayerInput.setAdapter(dropDownAdapter)
-
+            eventViewModel.setPlayerList(playerList)
             //Paint Betting player balance
             binding.eventBetForm.bettingPlayerInput.setOnItemClickListener { adapterView, view, i, l ->
                 val selectedPlayer: Player? =
@@ -212,7 +246,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
             player2NameText.text = event.player2.name
             player1OddsText.text = roundOff(event.event.player1Return)
             player2OddsText.text = roundOff(event.event.player2Return)
-            eventViewModel.setReturnDifference(event.event.player1Return,event.event.player2Return)
+            eventViewModel.setReturnDifference(event.event.player1Return, event.event.player2Return)
             eventBetForm.player1Radio.text = event.event.player1Name
             eventBetForm.player2Radio.text = event.event.player2Name
             //Player Images

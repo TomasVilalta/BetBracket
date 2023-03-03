@@ -184,6 +184,7 @@
         >
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/declare_winner_btn"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.Button.TextButton"
