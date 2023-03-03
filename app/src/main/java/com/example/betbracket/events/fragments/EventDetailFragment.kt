@@ -31,6 +31,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
     private var _binding: FragmentEventDetailBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: EventBetsAdapter
+    private var bettingPlayerBalance: Double = 0.0
     private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() }) {
         EventViewModelProviderFactory(
             EventsRepository(BetDatabase.getInstance(requireContext()))
@@ -137,8 +138,13 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
                 if (amountEditText.text.isNullOrBlank()) {
                     flag = true
                 }
+                if(amountEditText.text.toString().toDouble() > bettingPlayerBalance){
+                    flag = true
+                    amountEditText.error = "Balance insuficiente"
+                }
 
                 if (!flag) {
+                    amountEditText.error = null
                     val checkedPredictionId = rgWinnerSelect.checkedRadioButtonId
                     val checkedPrediction =
                         rgWinnerSelect.findViewById<MaterialRadioButton>(checkedPredictionId)
@@ -187,6 +193,7 @@ class EventDetailFragment : SecondaryScreenAbstractFragment() {
                 val selectedPlayer: Player? =
                     playerList.find { it.name == binding.eventBetForm.bettingPlayerInput.text.toString() }
                 if (selectedPlayer != null) {
+                    bettingPlayerBalance = selectedPlayer.balance
                     binding.eventBetForm.bettingPlayerBalanceTxt.text =
                         getString(R.string.playerBalance, roundOff(selectedPlayer.balance))
                 }
